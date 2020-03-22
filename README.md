@@ -1,5 +1,15 @@
 # markdown-it
 
+## Porting Notes
+
+- python built-in names:
+  - `max` -> `maximum`
+  - `len` -> `length`
+- for loops -> while loops
+- `charCodeAt`
+- move `MarkdownIt` to separate module
+- allow renderer to be passed to `MarkdownIt`
+
 [![Build Status](https://img.shields.io/travis/markdown-it/markdown-it/master.svg?style=flat)](https://travis-ci.org/markdown-it/markdown-it)
 [![NPM version](https://img.shields.io/npm/v/markdown-it.svg?style=flat)](https://www.npmjs.org/package/markdown-it)
 [![Coverage Status](https://coveralls.io/repos/markdown-it/markdown-it/badge.svg?branch=master&service=github)](https://coveralls.io/github/markdown-it/markdown-it?branch=master)
@@ -18,6 +28,7 @@ __[Live demo](https://markdown-it.github.io)__
 __Table of content__
 
 - [markdown-it](#markdown-it)
+  - [Porting Notes](#porting-notes)
   - [Install](#install)
   - [Usage examples](#usage-examples)
     - [Simple](#simple)
@@ -29,7 +40,7 @@ __Table of content__
   - [Syntax extensions](#syntax-extensions)
     - [Manage rules](#manage-rules)
   - [Benchmark](#benchmark)
-  - [Support markdown-it](#support-markdown-it)
+  - [markdown-it for enterprise](#markdown-it-for-enterprise)
   - [Authors](#authors)
   - [References / Thanks](#references--thanks)
 

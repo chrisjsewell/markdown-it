@@ -10,15 +10,15 @@ from . import rules_block
 _rules = [
     # First 2 params - rule name & source. Secondary array - list of rules,
     # which can be terminated by this one.
-    #   [ 'table',      require('./rules_block/table'),      [ 'paragraph', 'reference' ] ],
+    #   [ 'table', require('./rules_block/table'), [ 'paragraph', 'reference' ] ],
     ["code", rules_block.code],
-    #   [ 'fence',      require('./rules_block/fence'),      [ 'paragraph', 'reference', 'blockquote', 'list' ] ],
+    ["fence", rules_block.fence, ["paragraph", "reference", "blockquote", "list"]],
     #   [ 'blockquote', require('./rules_block/blockquote'), [ 'paragraph', 'reference', 'blockquote', 'list' ] ],
-    #   [ 'hr',         require('./rules_block/hr'),         [ 'paragraph', 'reference', 'blockquote', 'list' ] ],
-    #   [ 'list',       require('./rules_block/list'),       [ 'paragraph', 'reference', 'blockquote' ] ],
-    #   [ 'reference',  require('./rules_block/reference') ],
+    ["hr", rules_block.hr, ["paragraph", "reference", "blockquote", "list"]],
+    ["list", rules_block.list_block, ["paragraph", "reference", "blockquote"]],
+    #   [ 'reference', require('./rules_block/reference') ],
     ["heading", rules_block.heading, ["paragraph", "reference", "blockquote"]],
-    #   [ 'lheading',   require('./rules_block/lheading') ],
+    ["lheading", rules_block.lheading],
     #   [ 'html_block', require('./rules_block/html_block'), [ 'paragraph', 'reference', 'blockquote' ] ],
     ["paragraph", rules_block.paragraph],
 ]

@@ -4,3 +4,4 @@ from .balance_pairs import link_pairs  # noqa: F401
 from .escape import escape  # noqa: F401
 from .newline import newline  # noqa: F401
 from .backticks import backtick  # noqa: F401
+from . import emphasis  # noqa: F401

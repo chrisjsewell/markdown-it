@@ -26,10 +26,10 @@ presets = {
     },
     "components": {
         "core": {"rules": ["normalize", "block", "inline"]},
-        "block": {"rules": ["code", "heading", "paragraph"]},
+        "block": {"rules": ["code", "fence", "heading", "hr", "lheading", "list", "paragraph"]},
         "inline": {
-            "rules": ["backticks", "escape", "newline", "text"],
-            "rules2": ["balance_pairs", "text_collapse"],
+            "rules": ["backticks", "emphasis", "escape", "newline", "text"],
+            "rules2": ["balance_pairs", "emphasis", "text_collapse"],
         },
     },
 }

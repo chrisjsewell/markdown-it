@@ -10,7 +10,6 @@ def processDelimiters(state: StateInline, delimiters, *args):
 
     closerIdx = 0
     while closerIdx < maximum:
-        closerIdx += (1 if closerIdx else 0)
         closer = delimiters[closerIdx]
 
         # Length is only used for emphasis-specific "rule of 3",
@@ -20,11 +19,12 @@ def processDelimiters(state: StateInline, delimiters, *args):
         closer.length = closer.length or 0
 
         if not closer.close:
+            closerIdx += 1
             continue
 
         # Previously calculated lower bounds (previous fails)
         # for each marker and each delimiter length modulo 3.
-        if not openersBottom.hasOwnProperty(closer.marker):
+        if closer.marker not in openersBottom:
             openersBottom[closer.marker] = [-1, -1, -1]
 
         minOpenerIdx = openersBottom[closer.marker][closer.length % 3]
@@ -87,6 +87,8 @@ def processDelimiters(state: StateInline, delimiters, *args):
             # https:#github.com/commonmark/cmark/issues/178#issuecomment-270417442
             #
             openersBottom[closer.marker][(closer.length or 0) % 3] = newMinOpenerIdx
+
+        closerIdx += 1
 
 
 def link_pairs(state: StateInline):

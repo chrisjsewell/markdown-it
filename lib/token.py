@@ -78,3 +78,18 @@ class Token:
             self.attrPush([name, value])
         else:
             self.attrs[idx][1] = self.attrs[idx][1] + ' ' + value
+
+    def as_dict(self, children=True, filter=None, dict_factory=dict):
+        """Return the token as a dict.
+
+        :param bool children: Also convert children to dicts
+        :param callable filter: A callable whose return code determines whether an
+            attribute or element is included (``True``) or dropped (``False``).  Is
+            called with the `attr.Attribute` as the first argument and the
+            value as the second argument.
+        :param callable dict_factory: A callable to produce dictionaries from.  For
+            example, to produce ordered dictionaries instead of normal Python
+            dictionaries, pass in ``collections.OrderedDict``.
+
+        """
+        return attr.asdict(self, recurse=children, filter=filter, dict_factory=dict_factory)

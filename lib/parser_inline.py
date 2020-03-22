@@ -14,7 +14,7 @@ _rules = [
     ["escape", rules_inline.escape],
     ["backticks", rules_inline.backtick],
     #   [ 'strikethrough',   require('./rules_inline/strikethrough').tokenize ],
-    #   [ 'emphasis',        require('./rules_inline/emphasis').tokenize ],
+    ["emphasis", rules_inline.emphasis.tokenize],
     #   [ 'link',            require('./rules_inline/link') ],
     #   [ 'image',           require('./rules_inline/image') ],
     #   [ 'autolink',        require('./rules_inline/autolink') ],
@@ -25,7 +25,7 @@ _rules = [
 _rules2 = [
     ["balance_pairs", rules_inline.link_pairs],
     #   [ 'strikethrough',   require('./rules_inline/strikethrough').postProcess ],
-    #   [ 'emphasis',        require('./rules_inline/emphasis').postProcess ],
+    ["emphasis", rules_inline.emphasis.postProcess],
     ["text_collapse", rules_inline.text_collapse],
 ]
 

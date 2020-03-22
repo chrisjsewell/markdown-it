@@ -1,3 +1,4 @@
+from collections import namedtuple
 from typing import List
 
 import attr
@@ -34,6 +35,11 @@ class Delimiter:
     # an emphasis.
     open: bool = attr.ib()
     close: bool = attr.ib()
+
+    level: bool = attr.ib(default=None)
+
+
+Scanned = namedtuple('Scanned', ['can_open', 'can_close', 'length'])
 
 
 class StateInline(StateBase):
@@ -119,7 +125,7 @@ class StateInline(StateBase):
         marker = charCodeAt(self.src, start)
 
         # treat beginning of the line as a whitespace
-        lastChar = self.src.charCodeAt(start - 1) if start > 0 else 0x20
+        lastChar = charCodeAt(self.src, start - 1) if start > 0 else 0x20
 
         while pos < maximum and charCodeAt(self.src, pos) == marker:
             pos += 1
@@ -132,8 +138,8 @@ class StateInline(StateBase):
         isLastPunctChar = isMdAsciiPunct(lastChar) or isPunctChar(chr(lastChar))
         isNextPunctChar = isMdAsciiPunct(nextChar) or isPunctChar(chr(nextChar))
 
-        isLastWhiteSpace = isWhiteSpace(lastChar)
-        isNextWhiteSpace = isWhiteSpace(nextChar)
+        isLastWhiteSpace = isWhiteSpace(chr(lastChar))
+        isNextWhiteSpace = isWhiteSpace(chr(nextChar))
 
         if isNextWhiteSpace:
             left_flanking = False
@@ -154,4 +160,4 @@ class StateInline(StateBase):
             can_open = left_flanking
             can_close = right_flanking
 
-        return {"can_open": can_open, "can_close": can_close, "length": count}
+        return Scanned(can_open, can_close, count)

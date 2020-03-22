@@ -28,7 +28,6 @@ def backtick(state: StateInline, silent: bool):
 
     matchStart = matchEnd = pos
 
-    # TODO not working
     while True:
         try:
             matchStart = state.src.index("`", matchEnd)
