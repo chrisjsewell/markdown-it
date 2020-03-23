@@ -40,6 +40,7 @@ presets = {
         },
         "inline": {
             "rules": [
+                "autolink",
                 "backticks",
                 "emphasis",
                 "escape",

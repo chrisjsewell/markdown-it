@@ -17,7 +17,7 @@ _rules = [
     ["emphasis", rules_inline.emphasis.tokenize],
     ["link", rules_inline.link],
     ["image", rules_inline.image],
-    #   [ 'autolink',        require('./rules_inline/autolink') ],
+    ["autolink", rules_inline.autolink],
     #   [ 'html_inline',     require('./rules_inline/html_inline') ],
     #   [ 'entity',          require('./rules_inline/entity') ]
 ]
