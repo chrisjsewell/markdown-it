@@ -2,6 +2,7 @@ import re
 from typing import List, Optional, Union
 
 from . import helpers, presets  # noqa F401
+from .normalize_url import normalizeLink, normalizeLinkText
 from .common import utils  # noqa F401
 from .parser_core import ParserCore  # noqa F401
 from .parser_block import ParserBlock  # noqa F401
@@ -18,6 +19,11 @@ class AttrDict(dict):
     def __init__(self, *args, **kwargs):
         super(AttrDict, self).__init__(*args, **kwargs)
         self.__dict__ = self
+
+        # recursively apply to all nested dictionaries
+        for key, item in list(self.items()):
+            if isinstance(item, dict):
+                self[key] = AttrDict(item)
 
 
 config = AttrDict(
@@ -54,53 +60,6 @@ def validateLink(url: str):
 
 
 ################################################################################
-
-RECODE_HOSTNAME_FOR = ["http:", "https:", "mailto:"]
-
-
-def normalizeLink(url):
-    raise NotImplementedError("need to replace mdurl and punycode")  # TODO
-    mdurl = None
-    punycode = None
-
-    parsed = mdurl.parse(url, True)
-
-    if parsed.hostname:
-        # Encode hostnames in urls like:
-        # `http:#host/`, `https:#host/`, `mailto:user@host`, `#host/`
-        #
-        # We don't encode unknown schemas, because it's likely that we encode
-        # something we shouldn't (e.g. `skype:name` treated as `skype:host`)
-        #
-        if (not parsed.protocol) or parsed.protocol in RECODE_HOSTNAME_FOR:
-            try:
-                parsed.hostname = punycode.toASCII(parsed.hostname)
-            except Exception:
-                pass
-
-    return mdurl.encode(mdurl.format(parsed))
-
-
-def normalizeLinkText(url):
-    raise NotImplementedError("need to replace mdurl and punycode")  # TODO
-    mdurl = None
-    punycode = None
-
-    parsed = mdurl.parse(url, True)
-
-    if parsed.hostname:
-        # Encode hostnames in urls like:
-        # `http:#host/`, `https:#host/`, `mailto:user@host`, `#host/`
-        #
-        # We don't encode unknown schemas, because it's likely that we encode
-        # something we shouldn't (e.g. `skype:name` treated as `skype:host`)
-        #
-        if (not parsed.protocol) or parsed.protocol in RECODE_HOSTNAME_FOR:
-            try:
-                parsed.hostname = punycode.toUnicode(parsed.hostname)
-            except Exception:
-                pass
-    return mdurl.decode(mdurl.format(parsed))
 
 
 class MarkdownIt:

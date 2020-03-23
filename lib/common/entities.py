@@ -1,4 +1,6 @@
 """ HTML5 entities map: { name -> utf16string }
+
+Copied from https://registry.npmjs.org/entities/-/entities-2.0.0.tgz
 """
 
 class _Entities:

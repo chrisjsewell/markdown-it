@@ -28,7 +28,7 @@ presets = {
         "core": {"rules": ["normalize", "block", "inline"]},
         "block": {"rules": ["code", "fence", "heading", "hr", "lheading", "list", "paragraph"]},
         "inline": {
-            "rules": ["backticks", "emphasis", "escape", "newline", "text"],
+            "rules": ["backticks", "emphasis", "escape", "image", "newline", "text"],
             "rules2": ["balance_pairs", "emphasis", "text_collapse"],
         },
     },

@@ -16,7 +16,7 @@ _rules = [
     #   [ 'strikethrough',   require('./rules_inline/strikethrough').tokenize ],
     ["emphasis", rules_inline.emphasis.tokenize],
     #   [ 'link',            require('./rules_inline/link') ],
-    #   [ 'image',           require('./rules_inline/image') ],
+    ["image", rules_inline.image],
     #   [ 'autolink',        require('./rules_inline/autolink') ],
     #   [ 'html_inline',     require('./rules_inline/html_inline') ],
     #   [ 'entity',          require('./rules_inline/entity') ]
@@ -115,12 +115,12 @@ class ParserInline:
         if state.pending:
             state.pushPending()
 
-    def parse(self, src: str, md, env, outTokens: List[Token]):
-        """Process input string and push inline tokens into `outTokens`
+    def parse(self, src: str, md, env, tokens: List[Token]):
+        """Process input string and push inline tokens into `tokens`
         """
-        state = StateInline(src, md, env, outTokens)
+        state = StateInline(src, md, env, tokens)
         self.tokenize(state)
         rules2 = self.ruler2.getRules("")
         for rule in rules2:
             rule(state)
-        return outTokens
+        return tokens

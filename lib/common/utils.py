@@ -1,5 +1,6 @@
 """Utilities
 """
+import html
 import re
 
 from .entities import entities
@@ -101,13 +102,17 @@ UNESCAPE_ALL_RE = re.compile(
 )
 DIGITAL_ENTITY_TEST_RE = re.compile(r"^#((?:x[a-f0-9]{1,8}|[0-9]{1,8}))", re.IGNORECASE)
 
-
+# In [2]: from lib import MarkdownIt
+#    ...: md = MarkdownIt("working")
+#    ...: md.render("![](https://www.google.com)")
+# Out[2]: '<p><img src="https%3A//www.google.com" alt=""></p>\n'
 def replaceEntityPattern(match, name):
     code = 0
 
     if name in entities:
         return entities[name]
-
+    raise NotImplementedError()
+    # TODO replace parseInt and slice here
     if ord(name[0]) == 0x23 and DIGITAL_ENTITY_TEST_RE.match(name):
         code = (
             parseInt(name.slice(2), 16)
@@ -136,7 +141,11 @@ def unescapeMd(string: str):
 def unescapeAll(string: str):
     if "\\" in string and "&" in string:
         return string
-    raise NotImplementedError
+
+    # TODO here we use the built-in python method
+    # check this is ok?
+    return html.escape(string).replace("&#x27;", "'")
+
     def func(match):
         # TODO how to get escaped?
         escaped = False

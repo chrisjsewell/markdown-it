@@ -6,12 +6,13 @@ from ..common.utils import unescapeAll, charCodeAt
 
 
 class _Result:
-  __slots__ = ("ok", "pos", "lines", "string")
-  def __init__(self):
-    self.ok = False
-    self.pos = 0
-    self.lines = 0
-    self.string = ""
+    __slots__ = ("ok", "pos", "lines", "str")
+
+    def __init__(self):
+        self.ok = False
+        self.pos = 0
+        self.lines = 0
+        self.str = ""
 
 
 def parseLinkDestination(string, pos, maximum):
@@ -27,7 +28,7 @@ def parseLinkDestination(string, pos, maximum):
                 return result
             if code == 0x3E:  # /* > */) {
                 result.pos = pos + 1
-                result.string = unescapeAll(string.slice(start + 1, pos))
+                result.str = unescapeAll(string[start + 1:pos])
                 result.ok = True
                 return result
 
@@ -72,7 +73,7 @@ def parseLinkDestination(string, pos, maximum):
     if level != 0:
         return result
 
-    result.str = unescapeAll(string.slice(start, pos))
+    result.str = unescapeAll(string[start:pos])
     result.lines = lines
     result.pos = pos
     result.ok = True

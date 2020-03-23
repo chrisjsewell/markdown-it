@@ -5,9 +5,10 @@ Generates HTML from parsed token stream. Each instance has independent
 copy of rules. Those can be rewritten with ease. Also, you can add new
 rules if you create plugin and adds new token types.
 """
+
 from typing import List
 
-from .common.utils import assign, unescapeAll, escapeHtml
+from .common.utils import unescapeAll, escapeHtml
 from .token import Token
 
 
@@ -169,7 +170,7 @@ class RendererHTML:
         """
         result = ""
 
-        for token in tokens:
+        for token in (tokens or []):
             if token.type == "text":
                 result += token.content
             elif token.type == "image":
@@ -223,7 +224,7 @@ class RendererHTML:
         # now we prefer to keep things local.
         if info:
             i = token.attrIndex("class")
-            tmpAttrs = token.attrs.slice() if token.attrs else []
+            tmpAttrs = token.attrs[:] if token.attrs else []
 
             if i < 0:
                 tmpAttrs.push(["class", options.langPrefix + langName])
@@ -261,7 +262,7 @@ class RendererHTML:
             token.children, options, env
         )
 
-        return self.renderToken(tokens, idx, options)
+        return self.renderToken(tokens, idx, options, env)
 
     def hardbreak(self, tokens, idx, options, *args):
         return "<br />\n" if options.xhtmlOut else "<br>\n"

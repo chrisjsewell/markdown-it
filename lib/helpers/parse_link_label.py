@@ -5,6 +5,7 @@ this function assumes that first character ("[") already matches
 returns the end of the label
 
 """
+from ..common.utils import charCodeAt
 
 
 def parseLinkLabel(state, start, disableNested):
@@ -16,7 +17,7 @@ def parseLinkLabel(state, start, disableNested):
     level = 1
 
     while state.pos < state.posMax:
-        marker = state.src.charCodeAt(state.pos)
+        marker = charCodeAt(state.src, state.pos)
         if marker == 0x5D:  # /* ] */)
             level -= 1
             if level == 0:
