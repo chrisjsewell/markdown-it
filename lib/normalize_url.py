@@ -1,5 +1,5 @@
 import html
-from urllib.parse import urlparse, urlunparse, quote, unquote
+from urllib.parse import urlparse, urlunparse, quote, unquote  # noqa: F401
 
 # TODO
 # replaced: parsed = mdurl.parse(url, True)
@@ -36,7 +36,7 @@ RECODE_HOSTNAME_FOR = ("http", "https", "mailto")
 
 def normalizeLink(url):
 
-    parsed = urlparse(url)
+    # parsed = urlparse(url)
 
     # if parsed.hostname:
     #     # Encode hostnames in urls like:
@@ -51,12 +51,12 @@ def normalizeLink(url):
     #         except Exception:
     #             pass
 
-    return quote(urlunparse(parsed))
+    return escape_url(url)  # quote(urlunparse(parsed))
 
 
 def normalizeLinkText(url):
 
-    parsed = urlparse(url)
+    # parsed = urlparse(url)
 
     # if parsed.hostname:
     #     # Encode hostnames in urls like:
@@ -71,4 +71,4 @@ def normalizeLinkText(url):
     #         except Exception:
     #             pass
 
-    return unquote(urlunparse(parsed))
+    return unquote(url)  # unquote(urlunparse(parsed))

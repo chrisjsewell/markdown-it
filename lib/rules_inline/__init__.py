@@ -6,3 +6,4 @@ from .newline import newline  # noqa: F401
 from .backticks import backtick  # noqa: F401
 from . import emphasis  # noqa: F401
 from .image import image  # noqa: F401
+from .link import link  # noqa: F401

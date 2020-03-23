@@ -15,7 +15,7 @@ _rules = [
     ["backticks", rules_inline.backtick],
     #   [ 'strikethrough',   require('./rules_inline/strikethrough').tokenize ],
     ["emphasis", rules_inline.emphasis.tokenize],
-    #   [ 'link',            require('./rules_inline/link') ],
+    ["link", rules_inline.link],
     ["image", rules_inline.image],
     #   [ 'autolink',        require('./rules_inline/autolink') ],
     #   [ 'html_inline',     require('./rules_inline/html_inline') ],

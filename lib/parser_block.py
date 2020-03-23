@@ -16,7 +16,7 @@ _rules = [
     #   [ 'blockquote', require('./rules_block/blockquote'), [ 'paragraph', 'reference', 'blockquote', 'list' ] ],
     ["hr", rules_block.hr, ["paragraph", "reference", "blockquote", "list"]],
     ["list", rules_block.list_block, ["paragraph", "reference", "blockquote"]],
-    #   [ 'reference', require('./rules_block/reference') ],
+    ["reference", rules_block.reference],
     ["heading", rules_block.heading, ["paragraph", "reference", "blockquote"]],
     ["lheading", rules_block.lheading],
     #   [ 'html_block', require('./rules_block/html_block'), [ 'paragraph', 'reference', 'blockquote' ] ],

@@ -99,5 +99,5 @@ def postProcess(state: StateInline):
     _postProcess(state, state.delimiters)
 
     for token in state.tokens_meta:
-        if token and token.delimiters:
-            _postProcess(state, token.delimiters)
+        if token and "delimiters" in token:
+            _postProcess(state, token["delimiters"])

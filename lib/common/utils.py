@@ -324,7 +324,7 @@ def normalizeReference(string: str) -> str:
     # (this avoid a conflict with Object.prototype members,
     # most notably, `__proto__`)
     #
-    return str.lower().upper()
+    return string.lower().upper()
 
 
 #########################################################################

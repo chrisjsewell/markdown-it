@@ -5,3 +5,4 @@ from .code import code  # noqa: F401
 from .fence import fence  # noqa: F401
 from .hr import hr  # noqa: F401
 from .list import list_block   # noqa: F401
+from .reference import reference  # noqa: F401

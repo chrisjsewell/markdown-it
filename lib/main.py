@@ -9,22 +9,11 @@ from .parser_block import ParserBlock  # noqa F401
 from .parser_inline import ParserInline  # noqa F401
 from .rules_core.state_core import StateCore
 from .renderer import RendererHTML
+from .utils import AttrDict
 
 # var LinkifyIt    = require('linkify-it')
 # var mdurl        = require('mdurl')
 # var punycode     = require('punycode')
-
-
-class AttrDict(dict):
-    def __init__(self, *args, **kwargs):
-        super(AttrDict, self).__init__(*args, **kwargs)
-        self.__dict__ = self
-
-        # recursively apply to all nested dictionaries
-        for key, item in list(self.items()):
-            if isinstance(item, dict):
-                self[key] = AttrDict(item)
-
 
 config = AttrDict(
     {
@@ -254,7 +243,7 @@ class MarkdownIt:
         But you will not need it with high probability. See also comment
         in [[MarkdownIt.parse]].
         """
-        env = env or {}
+        env = AttrDict(env or {})
         return self.renderer.render(self.parse(src, env), self.options, env)
 
     def parseInline(self, src: str, env: Optional[dict] = None):
@@ -281,5 +270,5 @@ class MarkdownIt:
         Similar to [[MarkdownIt.render]] but for single paragraph content. Result
         will NOT be wrapped into `<p>` tags.
         """
-        env = env or {}
+        env = AttrDict(env or {})
         return self.renderer.render(self.parseInline(src, env), self.options, env)
