@@ -74,7 +74,7 @@ def blockquote(state: StateBlock, startLine: int, endLine: int, silent: bool):
         ch = charCodeAt(state.src, pos)
 
         if isSpace(ch):
-            if ch == 0x09:
+            if ch == 0x09:  # / tab /
                 offset += (
                     4
                     - (offset + state.bsCount[startLine] + (1 if adjustTab else 0)) % 4
@@ -127,7 +127,7 @@ def blockquote(state: StateBlock, startLine: int, endLine: int, silent: bool):
 
     # for (nextLine = startLine + 1; nextLine < endLine; nextLine++) {
     nextLine = startLine + 1
-    for nextLine in range(startLine + 1, endLine):
+    while nextLine < endLine:
 
         # check if it's outdented, i.e. it's inside list item and indented
         # less than said list item:
@@ -225,6 +225,8 @@ def blockquote(state: StateBlock, startLine: int, endLine: int, silent: bool):
 
             oldTShift.append(state.tShift[nextLine])
             state.tShift[nextLine] = pos - state.bMarks[nextLine]
+
+            nextLine += 1
             continue
 
         # Case 2: line is not inside the blockquote, and the last line was empty.
@@ -266,6 +268,8 @@ def blockquote(state: StateBlock, startLine: int, endLine: int, silent: bool):
         # A negative indentation means that this is a paragraph continuation
         #
         state.sCount[nextLine] = -1
+
+        nextLine += 1
 
     oldIndent = state.blkIndent
     state.blkIndent = 0
