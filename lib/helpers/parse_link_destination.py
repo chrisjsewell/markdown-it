@@ -28,7 +28,7 @@ def parseLinkDestination(string, pos, maximum):
                 return result
             if code == 0x3E:  # /* > */) {
                 result.pos = pos + 1
-                result.str = unescapeAll(string[start + 1:pos])
+                result.str = unescapeAll(string[start + 1 : pos])
                 result.ok = True
                 return result
 

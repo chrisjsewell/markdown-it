@@ -1,7 +1,10 @@
 # Lists
+import logging
 
 from .state_block import StateBlock
 from ..common.utils import charCodeAt, isSpace
+
+LOGGER = logging.getLogger(__name__)
 
 
 # Search `[-+*][\n ]`, returns next pos after marker on success
@@ -94,6 +97,9 @@ def markTightParagraphs(state: StateBlock, idx: int):
 
 
 def list_block(state: StateBlock, startLine: int, endLine: int, silent: bool):
+
+    LOGGER.debug("entering list: %s, %s, %s, %s", state, startLine, endLine, silent)
+
     isTerminatingParagraph = False
     tight = True
 

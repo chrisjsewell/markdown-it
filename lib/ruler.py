@@ -68,7 +68,7 @@ class Ruler:
             for rule in self.__rules__:
                 if not rule.enabled:
                     continue
-                if chain and chain in rule.alt:
+                if chain and (chain not in rule.alt):
                     continue
                 self.__cache__[chain].append(rule.fn)
 
@@ -85,7 +85,7 @@ class Ruler:
         if index == -1:
             raise KeyError(f"Parser rule not found: {ruleName}")
         self.__rules__[index].fn = fn
-        self.__rules__[index].alt = options['alt'] or []
+        self.__rules__[index].alt = options["alt"] or []
         self.__cache__ = None
 
     def before(self, beforeName: str, ruleName: str, fn: RuleFunc, options=None):
@@ -101,9 +101,7 @@ class Ruler:
         options = options or {}
         if index == -1:
             raise KeyError(f"Parser rule not found: {beforeName}")
-        self.__rules__.insert(
-            index, Rule(ruleName, True, fn, options.get("alt", []))
-        )
+        self.__rules__.insert(index, Rule(ruleName, True, fn, options.get("alt", [])))
         self.__cache__ = None
 
     def after(self, afterName: str, ruleName: str, fn: RuleFunc, options=None):
@@ -124,7 +122,6 @@ class Ruler:
         )
         self.__cache__ = None
 
-
     def push(self, ruleName: str, fn: RuleFunc, options=None):
         """Push new rule to the end of chain.
 
@@ -133,9 +130,7 @@ class Ruler:
         :param options: new rule options (not mandatory).
 
         """
-        self.__rules__.append(
-            Rule(ruleName, True, fn, (options or {}).get("alt", []))
-        )
+        self.__rules__.append(Rule(ruleName, True, fn, (options or {}).get("alt", [])))
         self.__cache__ = None
 
     def enable(self, names: Union[str, List[str]], ignoreInvalid: bool = False):
@@ -154,7 +149,7 @@ class Ruler:
             if (idx < 0) and ignoreInvalid:
                 continue
             if (idx < 0) and not ignoreInvalid:
-                raise KeyError(f'Rules manager: invalid rule name {name}')
+                raise KeyError(f"Rules manager: invalid rule name {name}")
             self.__rules__[idx].enabled = True
             result.append(name)
         self.__cache__ = None
@@ -190,7 +185,7 @@ class Ruler:
             if (idx < 0) and ignoreInvalid:
                 continue
             if (idx < 0) and not ignoreInvalid:
-                raise KeyError(f'Rules manager: invalid rule name {name}')
+                raise KeyError(f"Rules manager: invalid rule name {name}")
             self.__rules__[idx].enabled = False
             result.append(name)
         self.__cache__ = None
@@ -208,4 +203,3 @@ class Ruler:
             self.__compile__()
         # Chain can be empty, if rules disabled. But we still have to return Array.
         return self.__cache__.get(chainName, []) or []
-

@@ -77,7 +77,7 @@ class Token:
         if idx < 0:
             self.attrPush([name, value])
         else:
-            self.attrs[idx][1] = self.attrs[idx][1] + ' ' + value
+            self.attrs[idx][1] = self.attrs[idx][1] + " " + value
 
     def as_dict(self, children=True, filter=None, dict_factory=dict):
         """Return the token as a dict.
@@ -92,4 +92,6 @@ class Token:
             dictionaries, pass in ``collections.OrderedDict``.
 
         """
-        return attr.asdict(self, recurse=children, filter=filter, dict_factory=dict_factory)
+        return attr.asdict(
+            self, recurse=children, filter=filter, dict_factory=dict_factory
+        )

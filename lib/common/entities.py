@@ -3,16 +3,20 @@
 Copied from https://registry.npmjs.org/entities/-/entities-2.0.0.tgz
 """
 
+
 class _Entities:
     def __getattr__(self, name):
         try:
             return DATA[name]
         except:
             raise AttributeError(name)
+
     def __item__(self, name):
         return DATA[name]
-    def __contains__(self ,name):
+
+    def __contains__(self, name):
         name in DATA
+
 
 entities = _Entities()
 

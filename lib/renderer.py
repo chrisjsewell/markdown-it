@@ -43,9 +43,14 @@ class RendererHTML:
     See [source code](https://github.com/markdown-it/markdown-it/blob/master/lib/renderer.js)
     for more details and examples.
     """
+
     @property
     def rules(self):
-        return {k: v for k, v in self.__class__.__dict__.items() if not (k.startswith("render") or k.startswith("_"))}
+        return {
+            k: v
+            for k, v in self.__class__.__dict__.items()
+            if not (k.startswith("render") or k.startswith("_"))
+        }
 
     def render(self, tokens: List[Token], options, env) -> str:
         """Takes token stream and generates HTML.
@@ -85,7 +90,9 @@ class RendererHTML:
 
         return result
 
-    def renderToken(self, tokens: List[Token], idx: int, options: dict, env: dict) -> str:
+    def renderToken(
+        self, tokens: List[Token], idx: int, options: dict, env: dict
+    ) -> str:
         """Default token renderer.
 
         Can be overridden by custom function
@@ -170,7 +177,7 @@ class RendererHTML:
         """
         result = ""
 
-        for token in (tokens or []):
+        for token in tokens or []:
             if token.type == "text":
                 result += token.content
             elif token.type == "image":
@@ -280,4 +287,3 @@ class RendererHTML:
 
     def html_inline(self, tokens, idx, *args):
         return tokens[idx].content
-

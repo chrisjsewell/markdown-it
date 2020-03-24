@@ -6,9 +6,19 @@ import re
 from .entities import entities
 
 
-def charCodeAt(src, pos):
-    """This was added for compatibility with python"""
-    return ord(src[pos])
+def charCodeAt(src: str, pos: int):
+    """
+    Returns the Unicode value of the character at the specified location.
+
+    @param - index The zero-based index of the desired character.
+    If there is no character at the specified index, NaN is returned.
+
+    This was added for compatibility with python
+    """
+    try:
+        return ord(src[pos])
+    except IndexError:
+        return None
 
 
 # function _class(obj) { return Object.prototype.toString.call(obj); }
@@ -49,7 +59,7 @@ def arrayReplaceAt(src: list, pos: int, newElements: list):
   Remove element from array and put another array at those position.
   Useful for some operations with tokens
   """
-    return src[0:pos] + newElements + src[pos + 1:]
+    return src[0:pos] + newElements + src[pos + 1 :]
 
 
 ######################################################################
@@ -280,7 +290,7 @@ def normalizeReference(string: str) -> str:
     """Helper to unify [reference labels]."""
     # Trim and collapse whitespace
     #
-    string, _ = re.subn("\s+", " ", string.strip())
+    string, _ = re.subn(r"\s+", " ", string.strip())
 
     # In node v10 'ẞ'.toLowerCase() === 'Ṿ', which is presumed to be a bug
     # fixed in v12 (couldn't find any details).

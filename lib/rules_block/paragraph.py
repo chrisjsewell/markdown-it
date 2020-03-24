@@ -1,11 +1,18 @@
 """Paragraph."""
+import logging
 from typing import List
 
 from ..ruler import Ruler
 from .state_block import StateBlock
 
+LOGGER = logging.getLogger(__name__)
+
 
 def paragraph(state: StateBlock, startLine: int, endLine: int, silent: bool = False):
+
+    LOGGER.debug(
+        "entering paragraph: %s, %s, %s, %s", state, startLine, endLine, silent
+    )
 
     nextLine = startLine + 1
     ruler: Ruler = state.md.block.ruler

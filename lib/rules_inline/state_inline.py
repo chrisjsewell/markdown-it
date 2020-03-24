@@ -39,7 +39,7 @@ class Delimiter:
     level: bool = attr.ib(default=None)
 
 
-Scanned = namedtuple('Scanned', ['can_open', 'can_close', 'length'])
+Scanned = namedtuple("Scanned", ["can_open", "can_close", "length"])
 
 
 class StateInline(StateBase):
@@ -73,11 +73,11 @@ class StateInline(StateBase):
         )
 
     def pushPending(self):
-        token = Token('text', '', 0)
+        token = Token("text", "", 0)
         token.content = self.pending
         token.level = self.pendingLevel
         self.tokens.append(token)
-        self.pending = ''
+        self.pending = ""
         return token
 
     def push(self, ttype, tag, nesting):

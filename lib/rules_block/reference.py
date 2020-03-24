@@ -1,9 +1,18 @@
+import logging
+
 from ..common.utils import isSpace, normalizeReference, charCodeAt
 from ..utils import AttrDict
 from .state_block import StateBlock
 
 
+LOGGER = logging.getLogger(__name__)
+
+
 def reference(state: StateBlock, startLine, _endLine, silent):
+
+    LOGGER.debug(
+        "entering reference: %s, %s, %s, %s", state, startLine, _endLine, silent
+    )
 
     lines = 0
     pos = state.bMarks[startLine] + state.tShift[startLine]

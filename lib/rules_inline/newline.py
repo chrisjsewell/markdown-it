@@ -14,7 +14,7 @@ def newline(state: StateInline, silent: bool):
     if charCodeAt(state.src, pos) != 0x0A:
         return False
 
-    pmax = state.pending.length - 1
+    pmax = len(state.pending) - 1
     maximum = state.posMax
 
     # '  \n' -> hardbreak

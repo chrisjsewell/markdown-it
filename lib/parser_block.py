@@ -1,10 +1,13 @@
 """Block-level tokenizer."""
+import logging
 from typing import List
 
 from .ruler import Ruler
 from .token import Token
 from .rules_block.state_block import StateBlock
 from . import rules_block
+
+LOGGER = logging.getLogger(__name__)
 
 # TODO
 _rules = [
@@ -13,13 +16,17 @@ _rules = [
     #   [ 'table', require('./rules_block/table'), [ 'paragraph', 'reference' ] ],
     ["code", rules_block.code],
     ["fence", rules_block.fence, ["paragraph", "reference", "blockquote", "list"]],
-    #   [ 'blockquote', require('./rules_block/blockquote'), [ 'paragraph', 'reference', 'blockquote', 'list' ] ],
+    [
+        "blockquote",
+        rules_block.blockquote,
+        ["paragraph", "reference", "blockquote", "list"],
+    ],
     ["hr", rules_block.hr, ["paragraph", "reference", "blockquote", "list"]],
     ["list", rules_block.list_block, ["paragraph", "reference", "blockquote"]],
     ["reference", rules_block.reference],
     ["heading", rules_block.heading, ["paragraph", "reference", "blockquote"]],
     ["lheading", rules_block.lheading],
-    #   [ 'html_block', require('./rules_block/html_block'), [ 'paragraph', 'reference', 'blockquote' ] ],
+    ["html_block", rules_block.html_block, ["paragraph", "reference", "blockquote"]],
     ["paragraph", rules_block.paragraph],
 ]
 

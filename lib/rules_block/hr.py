@@ -2,12 +2,18 @@
 
 At least 3 of these characters on a line * - _
 """
+import logging
 
 from ..common.utils import charCodeAt, isSpace
 from .state_block import StateBlock
 
 
+LOGGER = logging.getLogger(__name__)
+
+
 def hr(state: StateBlock, startLine: int, endLine: int, silent: bool):
+
+    LOGGER.debug("entering hr: %s, %s, %s, %s", state, startLine, endLine, silent)
 
     pos = state.bMarks[startLine] + state.tShift[startLine]
     maximum = state.eMarks[startLine]

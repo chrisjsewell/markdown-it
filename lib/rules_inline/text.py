@@ -50,7 +50,7 @@ def text(state: StateInline, silent: bool, **args):
         return False
 
     if not silent:
-        state.pending += state.src[state.pos:pos]
+        state.pending += state.src[state.pos : pos]
 
     state.pos = pos
 

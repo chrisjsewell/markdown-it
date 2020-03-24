@@ -5,7 +5,7 @@ modes. For example, to parse bold/italic only.
 
 presets = {
     "options": {
-        "html": False,  # Enable HTML tags in source
+        "html": True,  # Enable HTML tags in source
         "xhtmlOut": False,  # Use '/' to close single tags (<br />)
         "breaks": False,  # Convert '\n' in paragraphs into <br>
         "langPrefix": "language-",  # CSS language prefix for fenced blocks
@@ -28,10 +28,12 @@ presets = {
         "core": {"rules": ["normalize", "block", "inline"]},
         "block": {
             "rules": [
+                "blockquote",
                 "code",
                 "fence",
                 "heading",
                 "hr",
+                "html_block",
                 "lheading",
                 "list",
                 "reference",

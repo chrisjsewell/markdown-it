@@ -80,8 +80,8 @@ class StateBlock(StateBase):
                 else:
                     indent_found = True
 
-            if (character == 0x0A or pos == length - 1):
-                if (character != 0x0A):
+            if character == 0x0A or pos == length - 1:
+                if character != 0x0A:
                     pos += 1
                 self.bMarks.append(start)
                 self.eMarks.append(pos)
@@ -103,14 +103,20 @@ class StateBlock(StateBase):
 
         self.lineMax = len(self.bMarks) - 1  # don't count last fake line
 
+    def __repr__(self):
+        return (
+            f"{self.__class__.__name__}"
+            f"(line={self.line},level={self.level},tokens={len(self.tokens)})"
+        )
+
     def push(self, ttype, tag, nesting):
         """Push new token to "stream"."""
         token = Token(ttype, tag, nesting)
         token.block = True
-        if (nesting < 0):
+        if nesting < 0:
             self.level -= 1  # closing tag
         token.level = self.level
-        if (nesting > 0):
+        if nesting > 0:
             self.level += 1  # opening tag
         self.tokens.append(token)
         return token
@@ -137,10 +143,10 @@ class StateBlock(StateBase):
 
     def skipSpacesBack(self, pos: int, minimum: int):
         """Skip spaces from given position in reverse."""
-        if (pos <= minimum):
+        if pos <= minimum:
             return pos
-        while (pos > minimum):
-            if (not isSpace(charCodeAt(self.src, pos))):
+        while pos > minimum:
+            if not isSpace(charCodeAt(self.src, pos)):
                 return pos + 1
             pos -= 1
         return pos
@@ -148,17 +154,17 @@ class StateBlock(StateBase):
     def skipChars(self, pos: int, code: int):
         """Skip char codes from given position."""
         while pos < len(self.src):
-            if (charCodeAt(self.src, pos) != code):
+            if charCodeAt(self.src, pos) != code:
                 break
             pos += 1
         return pos
 
     def skipCharsBack(self, pos, code, minimum):
         """Skip char codes reverse from given position - 1."""
-        if (pos <= minimum):
+        if pos <= minimum:
             return pos
-        while (pos > minimum):
-            if (code != charCodeAt(self.src, pos)):
+        while pos > minimum:
+            if code != charCodeAt(self.src, pos):
                 return pos + 1
             pos -= 1
         return pos
@@ -166,8 +172,8 @@ class StateBlock(StateBase):
     def getLines(self, begin, end, indent, keepLastLF):
         """Cut lines range from source."""
         line = begin
-        if (begin >= end):
-            return ''
+        if begin >= end:
+            return ""
 
         queue = [""] * (end - begin)
 
@@ -175,30 +181,30 @@ class StateBlock(StateBase):
         while line < end:
             lineIndent = 0
             lineStart = first = self.bMarks[line]
-            if (line + 1 < end or keepLastLF):
+            if line + 1 < end or keepLastLF:
                 last = self.eMarks[line] + 1
             else:
                 last = self.eMarks[line]
 
-            while (first < last and lineIndent < indent):
+            while first < last and lineIndent < indent:
                 ch = charCodeAt(self.src, first)
                 if isSpace(ch):
-                    if (ch == 0x09):
+                    if ch == 0x09:
                         lineIndent += 4 - (lineIndent + self.bsCount[line]) % 4
                     else:
                         lineIndent += 1
-                elif (first - lineStart < self.tShift[line]):
+                elif first - lineStart < self.tShift[line]:
                     lineIndent += 1
                 else:
                     break
                 first += 1
 
-            if (lineIndent > indent):
+            if lineIndent > indent:
                 # partially expanding tabs in code blocks, e.g '\t\tfoobar'
                 # with indent=2 becomes '  \tfoobar'
-                queue[i-1] = (' ' * (lineIndent - indent)) + self.src[first: last]
+                queue[i - 1] = (" " * (lineIndent - indent)) + self.src[first:last]
             else:
-                queue[i-1] = self.src[first: last]
+                queue[i - 1] = self.src[first:last]
 
             line += 1
             i += 1

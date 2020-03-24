@@ -4,5 +4,7 @@ from .lheading import lheading  # noqa: F401
 from .code import code  # noqa: F401
 from .fence import fence  # noqa: F401
 from .hr import hr  # noqa: F401
-from .list import list_block   # noqa: F401
+from .list import list_block  # noqa: F401
 from .reference import reference  # noqa: F401
+from .blockquote import blockquote  # noqa: F401
+from .html_block import html_block

@@ -36,4 +36,5 @@ HTML_TAG_RE = re.compile(
     + cdata
     + ")"
 )
-HTML_OPEN_CLOSE_TAG_RE = re.compile("^(?:" + open_tag + "|" + close_tag + ")")
+HTML_OPEN_CLOSE_TAG_STR = "^(?:" + open_tag + "|" + close_tag + ")"
+HTML_OPEN_CLOSE_TAG_RE = re.compile(HTML_OPEN_CLOSE_TAG_STR)

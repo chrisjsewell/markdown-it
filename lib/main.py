@@ -20,7 +20,7 @@ config = AttrDict(
         "default": presets.default.presets,
         "zero": presets.zero.presets,
         "commonmark": presets.commonmark.presets,
-        "working": presets.working.presets
+        "working": presets.working.presets,
     }
 )
 
@@ -52,7 +52,9 @@ def validateLink(url: str):
 
 
 class MarkdownIt:
-    def __init__(self, presetName: Union[str, AttrDict] = "zero", options=None, renderer=None):
+    def __init__(
+        self, presetName: Union[str, AttrDict] = "zero", options=None, renderer=None
+    ):
         """Main class
 
         :param presetName: name of configuration to load or a pre-defined one
