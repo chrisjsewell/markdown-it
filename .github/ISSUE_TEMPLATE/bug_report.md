@@ -9,12 +9,14 @@ assignees: ''
 
 <!--
 
-Please note, this package is about IMPLEMENTATION of CommonMark https://commonmark.org/, not about markdown itself. We stay aside of markup discussions. Prior to report a bug, make sure it's about this package, not generic thing.
+Please note, this package is about IMPLEMENTATION of CommonMark https://commonmark.org/, and adherence to he upstream markdown-it package,
+not about markdown itself. We stay aside of markup discussions. Prior to report a bug, make sure it's about this package, not generic thing.
 
 **Before you post**
 
 1. https://spec.commonmark.org/ - make sure you've read CommonMark spec.
 2. https://spec.commonmark.org/dingus/ - if you think you found parse error, check it in reference implementation first.
+3. https://markdown-it.github.io/ to test what is the expected output from markdown-ot
 
 **In your report** 
 
