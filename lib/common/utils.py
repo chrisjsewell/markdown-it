@@ -171,22 +171,25 @@ def unescapeAll(string: str):
 
 # TODO This section changed quite a lot, should re-check
 
-UNESCAPE_HTML_RE = re.compile(r"\\&(?=(amp\;|lt\;|gt\;|quot\;))")
-ESCAPE_AND_HTML = re.compile(r"&(?!(amp\;|lt\;|gt\;|quot\;))")
-HTML_ESCAPE_REPLACE_RE = re.compile(r'[&<>"]')
+# UNESCAPE_HTML_RE = re.compile(r"\\&(?=(amp\;|lt\;|gt\;|quot\;))")
+# ESCAPE_AND_HTML = re.compile(r"&(?!(amp\;|lt\;|gt\;|quot\;))")
+# HTML_ESCAPE_REPLACE_RE = re.compile(r'[&<>"]')
 
 
-def escapeHtml(string: str):
+# def escapeHtml(string: str):
 
-    if HTML_ESCAPE_REPLACE_RE.search(string):
+#     if HTML_ESCAPE_REPLACE_RE.search(string):
 
-        string, _ = UNESCAPE_HTML_RE.subn("&", string)
-        string, _ = ESCAPE_AND_HTML.subn("&amp;", string)
-        for k, v in {"<": "&lt;", ">": "&gt;", '"': "&quot;"}.items():
-            string = string.replace(k, v)
+#         string, _ = UNESCAPE_HTML_RE.subn("&", string)
+#         string, _ = ESCAPE_AND_HTML.subn("&amp;", string)
+#         for k, v in {"<": "&lt;", ">": "&gt;", '"': "&quot;"}.items():
+#             string = string.replace(k, v)
 
-    return string
+#     return string
 
+def escapeHtml(raw: str):
+    # return html.escape(html.unescape(raw)).replace("&#x27;", "'")
+    return html.escape(raw).replace("&#x27;", "'")
 
 # //////////////////////////////////////////////////////////////////////////////
 

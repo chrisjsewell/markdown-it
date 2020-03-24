@@ -41,5 +41,16 @@ def test_spec(entry):
 
 def test_other():
     md = MarkdownIt("commonmark")
-    print(md.render("- a\n - b\n  - c\n   - d\n    - e\n   - f\n  - g\n - h\n- i\n"))
+    print(md.render("""
+```````````````````````````````` example
+  <div>
+
+    <div>
+.
+  <div>
+<pre><code>&lt;div&gt;
+</code></pre>
+````````````````````````````````
+    """
+    ))
     raise
