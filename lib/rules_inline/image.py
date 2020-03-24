@@ -128,12 +128,12 @@ def image(state: StateInline, silent: bool):
     if not silent:
         content = state.src[labelStart:labelEnd]
 
-        state.md.inline.parse(content, state.md, state.env, tokens=[])
+        tokens = []
+        state.md.inline.parse(content, state.md, state.env, tokens)
 
         token = state.push("image", "img", 0)
         token.attrs = attrs = [["src", href], ["alt", ""]]
         token.children = tokens or None
-        token.content = content
 
         if title:
             attrs.append(["title", title])

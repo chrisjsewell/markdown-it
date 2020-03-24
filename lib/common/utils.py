@@ -169,16 +169,22 @@ def unescapeAll(string: str):
 
 # //////////////////////////////////////////////////////////////////////////////
 
-HTML_REPLACEMENTS = {"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}
+# TODO This section changed quite a lot, should re-check
 
-
-def replaceUnsafeChar(ch):
-    return HTML_REPLACEMENTS[ch]
+UNESCAPE_HTML_RE = re.compile(r"\\&(?=(amp\;|lt\;|gt\;|quot\;))")
+ESCAPE_AND_HTML = re.compile(r"&(?!(amp\;|lt\;|gt\;|quot\;))")
+HTML_ESCAPE_REPLACE_RE = re.compile(r'[&<>"]')
 
 
 def escapeHtml(string: str):
-    for k, v in HTML_REPLACEMENTS.items():
-        string = string.replace(k, v)
+
+    if HTML_ESCAPE_REPLACE_RE.search(string):
+
+        string, _ = UNESCAPE_HTML_RE.subn("&", string)
+        string, _ = ESCAPE_AND_HTML.subn("&amp;", string)
+        for k, v in {"<": "&lt;", ">": "&gt;", '"': "&quot;"}.items():
+            string = string.replace(k, v)
+
     return string
 
 

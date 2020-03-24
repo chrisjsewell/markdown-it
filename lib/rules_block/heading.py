@@ -42,10 +42,18 @@ def heading(state: StateBlock, startLine: int, endLine: int, silent: bool):
 
     # Let's cut tails like '    ###  ' from the end of string
 
-    maximum = state.skipSpacesBack(maximum, pos)
-    tmp = state.skipCharsBack(maximum, 0x23, pos)  # #
-    if tmp > pos and isSpace(charCodeAt(state.src, tmp - 1)):
-        maximum = tmp
+    # maximum = state.skipSpacesBack(maximum, pos)
+    # tmp = state.skipCharsBack(maximum, 0x23, pos)  # #
+    # if tmp > pos and isSpace(charCodeAt(state.src, tmp - 1)):
+    #     maximum = tmp
+    # TODO the code above doesn't seem to work, but this does
+    # we should check why the code above doesn't work though
+    _max = len(state.src[:maximum].rstrip().rstrip(chr(0x23)))
+    try:
+        if isSpace(charCodeAt(state.src, _max - 1)):
+            maximum = _max
+    except IndexError:
+        pass
 
     state.line = startLine + 1
 

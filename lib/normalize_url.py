@@ -22,16 +22,37 @@ from urllib.parse import urlparse, urlunparse, quote, unquote  # noqa: F401
 # which can be constructed using other parts of the url.
 
 
-# TODO in mistletoe we use these functions, do we need to use them here?
-def escape_html(raw):
-    return html.escape(html.unescape(raw)).replace("&#x27;", "'")
+#  ################# Copied from Commonmark.py #################
+
+ENTITY = '&(?:#x[a-f0-9]{1,6}|#[0-9]{1,7}|[a-z][a-z0-9]{1,31});'
+ESCAPABLE = '[!"#$%&\'()*+,./:;<=>?@[\\\\\\]^_`{|}~-]'
+reBackslashOrAmp = re.compile(r'[\\&]')
+reEntityOrEscapedChar = re.compile(
+    '\\\\' + ESCAPABLE + '|' + ENTITY, re.IGNORECASE)
 
 
-def escape_url(raw):
-    """
-    Escape urls to prevent code injection craziness. (Hopefully.)
-    """
-    return html.escape(quote(html.unescape(raw), safe="/#:()*?=%@+,&"))
+def unescape_char(s):
+    if s[0] == '\\':
+        return s[1]
+    else:
+        return html.unescape(s)
+
+
+def unescape_string(s):
+    """Replace entities and backslash escapes with literal characters."""
+    if re.search(reBackslashOrAmp, s):
+        return re.sub(
+            reEntityOrEscapedChar,
+            lambda m: unescape_char(m.group()),
+            s)
+    else:
+        return s
+
+
+def normalize_uri(uri):
+    return quote(uri.encode('utf-8'), safe=str('/@:+?=&()%#*,'))
+
+##################
 
 
 RECODE_HOSTNAME_FOR = ("http", "https", "mailto")
@@ -53,11 +74,12 @@ def normalizeLink(url):
     #             parsed.hostname = punycode.toASCII(parsed.hostname)
     #         except Exception:
     #             pass
+    # quote(urlunparse(parsed))
+    return normalize_uri(unescape_string(url))
 
-    return escape_url(url)  # quote(urlunparse(parsed))
 
-
-def normalizeLinkText(url):
+def normalizeLinkText(title):
+    """Normalize autolinks """
 
     # parsed = urlparse(url)
 
@@ -73,8 +95,7 @@ def normalizeLinkText(url):
     #             parsed.hostname = punycode.toUnicode(parsed.hostname)
     #         except Exception:
     #             pass
-
-    return unquote(url)  # unquote(urlunparse(parsed))
+    return unquote(unescape_string(title))  # unquote(urlunparse(parsed))
 
 
 ################################################################################
