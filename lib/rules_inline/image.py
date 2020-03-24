@@ -7,6 +7,7 @@ from ..common.utils import isSpace, charCodeAt, normalizeReference
 def image(state: StateInline, silent: bool):
 
     tokens = None
+    label = None
     href = ""
     oldPos = state.pos
     max = state.posMax
@@ -100,7 +101,7 @@ def image(state: StateInline, silent: bool):
             start = pos + 1
             pos = state.md.helpers.parseLinkLabel(state, pos)
             if pos >= 0:
-                label = state.src[start, pos]
+                label = state.src[start:pos]
                 pos += 1
             else:
                 pos = labelEnd + 1

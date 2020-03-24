@@ -1,8 +1,7 @@
-import re
 from typing import List, Optional, Union
 
 from . import helpers, presets  # noqa F401
-from .normalize_url import normalizeLink, normalizeLinkText
+from .normalize_url import normalizeLink, normalizeLinkText, validateLink
 from .common import utils  # noqa F401
 from .parser_core import ParserCore  # noqa F401
 from .parser_block import ParserBlock  # noqa F401
@@ -23,32 +22,6 @@ config = AttrDict(
         "working": presets.working.presets,
     }
 )
-
-
-################################################################################
-#
-# This validator can prohibit more than really needed to prevent XSS. It's a
-# tradeoff to keep code simple and to be secure by default.
-#
-# If you need different setup - override validator method as you wish. Or
-# replace it with dummy function and use external sanitizer.
-#
-
-BAD_PROTO_RE = re.compile(r"^(vbscript|javascript|file|data):")
-GOOD_DATA_RE = re.compile(r"^data:image\/(gif|png|jpeg|webp);")
-
-
-def validateLink(url: str):
-    """url should be normalized at this point, and existing entities are decoded."""
-    url = url.strip().lower()
-    return (
-        (True if GOOD_DATA_RE.match(url) else False)
-        if BAD_PROTO_RE.match(url)
-        else True
-    )
-
-
-################################################################################
 
 
 class MarkdownIt:
@@ -208,7 +181,7 @@ class MarkdownIt:
         raise NotImplementedError()
         # TODO what does this do?
         # var args = [ this ].concat(Array.prototype.slice.call(arguments, 1));
-        plugin.apply(self, args)
+        # plugin.apply(self, args)
         return self
 
     def parse(self, src: str, env: Optional[dict] = None):

@@ -5,13 +5,13 @@ from ..common.utils import unescapeAll, charCodeAt
 
 
 class _Result:
-    __slots__ = ("ok", "pos", "lines", "string")
+    __slots__ = ("ok", "pos", "lines", "str")
 
     def __init__(self):
         self.ok = False
         self.pos = 0
         self.lines = 0
-        self.string = ""
+        self.str = ""
 
 
 def parseLinkTitle(string, pos, maximum):
@@ -39,14 +39,14 @@ def parseLinkTitle(string, pos, maximum):
         if code == marker:
             result.pos = pos + 1
             result.lines = lines
-            result.string = unescapeAll(string[start + 1, pos])
+            result.str = unescapeAll(string[start + 1 : pos])
             result.ok = True
             return result
         elif code == 0x0A:
             lines += 1
         elif code == 0x5C and pos + 1 < maximum:  # /* \ */
             pos += 1
-            if string.charCodeAt(pos) == 0x0A:
+            if charCodeAt(string, pos) == 0x0A:
                 lines += 1
 
         pos += 1

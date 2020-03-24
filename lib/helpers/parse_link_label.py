@@ -8,10 +8,11 @@ returns the end of the label
 from ..common.utils import charCodeAt
 
 
-def parseLinkLabel(state, start, disableNested):
+def parseLinkLabel(state, start, disableNested=False):
 
     labelEnd = -1
     oldPos = state.pos
+    found = False
 
     state.pos = start + 1
     level = 1

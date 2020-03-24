@@ -160,7 +160,11 @@ class RendererHTML:
 
         for token_attr in token.attrs:
             result += (
-                " " + escapeHtml(token_attr[0]) + '="' + escapeHtml(token_attr[1]) + '"'
+                " "
+                + escapeHtml(str(token_attr[0]))
+                + '="'
+                + escapeHtml(str(token_attr[1]))
+                + '"'
             )
 
         return result
@@ -209,8 +213,8 @@ class RendererHTML:
         )
 
     def fence(self, tokens, idx, options, env):
-        token = (tokens[idx],)
-        info = unescapeAll(token.info).trim() if token.info else ""
+        token = tokens[idx]
+        info = unescapeAll(token.info).strip() if token.info else ""
         langName = ""
 
         if info:
@@ -223,7 +227,7 @@ class RendererHTML:
         else:
             highlighted = escapeHtml(token.content)
 
-        if highlighted.indexOf("<pre") == 0:
+        if highlighted.startswith("<pre"):
             return highlighted + "\n"
 
         # If language exists, inject class gently, without modifying original token.
@@ -234,7 +238,7 @@ class RendererHTML:
             tmpAttrs = token.attrs[:] if token.attrs else []
 
             if i < 0:
-                tmpAttrs.push(["class", options.langPrefix + langName])
+                tmpAttrs.append(["class", options.langPrefix + langName])
             else:
                 tmpAttrs[i][1] += " " + options.langPrefix + langName
 

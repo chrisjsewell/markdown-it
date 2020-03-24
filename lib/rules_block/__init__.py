@@ -7,4 +7,4 @@ from .hr import hr  # noqa: F401
 from .list import list_block  # noqa: F401
 from .reference import reference  # noqa: F401
 from .blockquote import blockquote  # noqa: F401
-from .html_block import html_block
+from .html_block import html_block  # noqa: F401

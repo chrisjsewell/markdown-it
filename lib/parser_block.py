@@ -49,7 +49,7 @@ class ParserBlock:
         """Generate tokens for input range."""
         rules = self.ruler.getRules("")
         line = startLine
-        maxNesting = state.md.options["maxNesting"]
+        maxNesting = state.md.options.maxNesting
         hasEmptyLines = False
 
         while line < endLine:
@@ -96,4 +96,4 @@ class ParserBlock:
             return
         state = StateBlock(src, md, env, outTokens)
         self.tokenize(state, state.line, state.lineMax)
-        return outTokens
+        return state.tokens

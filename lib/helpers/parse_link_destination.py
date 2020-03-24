@@ -23,7 +23,7 @@ def parseLinkDestination(string, pos, maximum):
     if charCodeAt(string, pos) == 0x3C:  # /* < */
         pos += 1
         while pos < maximum:
-            code = string.charCodeAt(pos)
+            code = charCodeAt(string, pos)
             if code == 0x0A:  # /* \n */)
                 return result
             if code == 0x3E:  # /* > */) {

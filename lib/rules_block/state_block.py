@@ -169,7 +169,7 @@ class StateBlock(StateBase):
             pos -= 1
         return pos
 
-    def getLines(self, begin, end, indent, keepLastLF):
+    def getLines(self, begin: int, end: int, indent, keepLastLF):
         """Cut lines range from source."""
         line = begin
         if begin >= end:
@@ -177,7 +177,7 @@ class StateBlock(StateBase):
 
         queue = [""] * (end - begin)
 
-        i = 0
+        i = 1
         while line < end:
             lineIndent = 0
             lineStart = first = self.bMarks[line]
@@ -186,7 +186,7 @@ class StateBlock(StateBase):
             else:
                 last = self.eMarks[line]
 
-            while first < last and lineIndent < indent:
+            while (first < last) and (lineIndent < indent):
                 ch = charCodeAt(self.src, first)
                 if isSpace(ch):
                     if ch == 0x09:

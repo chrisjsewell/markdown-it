@@ -1,6 +1,5 @@
 """Paragraph."""
 import logging
-from typing import List
 
 from ..ruler import Ruler
 from .state_block import StateBlock

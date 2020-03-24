@@ -8,3 +8,5 @@ from . import emphasis  # noqa: F401
 from .image import image  # noqa: F401
 from .link import link  # noqa: F401
 from .autolink import autolink  # noqa: F401
+from .entity import entity  # noqa: F401
+from .html_inline import html_inline  # noqa: F401

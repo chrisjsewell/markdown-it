@@ -1,1 +1,1 @@
-from .main import MarkdownIt
+from .main import MarkdownIt  # noqa: F401

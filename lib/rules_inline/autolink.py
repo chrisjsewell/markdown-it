@@ -21,7 +21,7 @@ def autolink(state: StateBase, silent: bool):
     if ">" not in tail:
         return False
 
-    linkMatch = AUTOLINK_RE.match(tail)
+    linkMatch = AUTOLINK_RE.search(tail)
     if linkMatch is not None:
 
         url = linkMatch.group(0)[1:-1]
@@ -45,10 +45,10 @@ def autolink(state: StateBase, silent: bool):
         state.pos += len(linkMatch.group(0))
         return True
 
-    emailMatch = EMAIL_RE.match(tail)
+    emailMatch = EMAIL_RE.search(tail)
     if emailMatch is not None:
 
-        url = emailMatch.group(0)[1, -1]
+        url = emailMatch.group(0)[1:-1]
         fullUrl = state.md.normalizeLink("mailto:" + url)
         if not state.md.validateLink(fullUrl):
             return False

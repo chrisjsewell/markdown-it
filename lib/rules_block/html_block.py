@@ -2,6 +2,7 @@
 import logging
 import re
 
+from .state_block import StateBlock
 from ..common.utils import charCodeAt
 from ..common.html_blocks import block_names
 from ..common.html_re import HTML_OPEN_CLOSE_TAG_STR
@@ -30,7 +31,7 @@ HTML_SEQUENCES = [
 ]
 
 
-def html_block(state, startLine, endLine, silent):
+def html_block(state: StateBlock, startLine: int, endLine: int, silent: bool):
     LOGGER.debug(
         "entering html_block: %s, %s, %s, %s", state, startLine, endLine, silent
     )
@@ -41,7 +42,7 @@ def html_block(state, startLine, endLine, silent):
     if state.sCount[startLine] - state.blkIndent >= 4:
         return False
 
-    if "html" not in state.md.options:
+    if not state.md.options.get("html", None):
         return False
 
     if charCodeAt(state.src, pos) != 0x3C:  # /* < */
@@ -51,7 +52,7 @@ def html_block(state, startLine, endLine, silent):
 
     html_seq = None
     for HTML_SEQUENCE in HTML_SEQUENCES:
-        if HTML_SEQUENCE[0].match(lineText):
+        if HTML_SEQUENCE[0].search(lineText):
             html_seq = HTML_SEQUENCE
             break
 
@@ -66,17 +67,17 @@ def html_block(state, startLine, endLine, silent):
 
     # If we are here - we detected HTML block.
     # Let's roll down till block end.
-    if not html_seq[1].match(lineText):
+    if not html_seq[1].search(lineText):
         while nextLine < endLine:
             if state.sCount[nextLine] < state.blkIndent:
                 break
 
             pos = state.bMarks[nextLine] + state.tShift[nextLine]
             maximum = state.eMarks[nextLine]
-            lineText = state.src.slice(pos, maximum)
+            lineText = state.src[pos:maximum]
 
-            if html_seq[1].match(lineText):
-                if lineText.length != 0:
+            if html_seq[1].search(lineText):
+                if len(lineText) != 0:
                     nextLine += 1
                 break
             nextLine += 1

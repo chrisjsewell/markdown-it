@@ -112,7 +112,11 @@ def link(state: StateInline, silent: bool):
         if not label:
             label = state.src[labelStart:labelEnd]
 
-        ref = state.env.references[normalizeReference(label)]
+        ref = (
+            state.env.references[normalizeReference(label)]
+            if normalizeReference(label) in state.env.references
+            else None
+        )
         if not ref:
             state.pos = oldPos
             return False
@@ -131,7 +135,7 @@ def link(state: StateInline, silent: bool):
         token = state.push("link_open", "a", 1)
         token.attrs = attrs = [["href", href]]
         if title:
-            attrs.push(["title", title])
+            attrs.append(["title", title])
 
         state.md.inline.tokenize(state)
 

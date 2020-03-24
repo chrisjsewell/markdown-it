@@ -18,8 +18,8 @@ _rules = [
     ["link", rules_inline.link],
     ["image", rules_inline.image],
     ["autolink", rules_inline.autolink],
-    #   [ 'html_inline',     require('./rules_inline/html_inline') ],
-    #   [ 'entity',          require('./rules_inline/entity') ]
+    ["html_inline", rules_inline.html_inline],
+    ["entity", rules_inline.entity],
 ]
 
 _rules2 = [
@@ -47,7 +47,7 @@ class ParserInline:
         ok = False
         pos = state.pos
         rules = self.ruler.getRules("")
-        maxNesting = state.md.options.maxNesting
+        maxNesting = state.md.options["maxNesting"]
         cache = state.cache
 
         if pos in cache:
@@ -123,4 +123,4 @@ class ParserInline:
         rules2 = self.ruler2.getRules("")
         for rule in rules2:
             rule(state)
-        return tokens
+        return state.tokens

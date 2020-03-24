@@ -8,10 +8,10 @@ class _Entities:
     def __getattr__(self, name):
         try:
             return DATA[name]
-        except:
+        except KeyError:
             raise AttributeError(name)
 
-    def __item__(self, name):
+    def __getitem__(self, name):
         return DATA[name]
 
     def __contains__(self, name):

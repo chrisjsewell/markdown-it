@@ -136,7 +136,7 @@ def list_block(state: StateBlock, startLine: int, endLine: int, silent: bool):
     if posAfterMarker >= 0:
         isOrdered = True
         start = state.bMarks[startLine] + state.tShift[startLine]
-        markerValue = int(state.src[start, posAfterMarker - start - 1])
+        markerValue = int(state.src[start : posAfterMarker - 1])
 
         # If we're starting a new ordered list right after
         # a paragraph, it should start with 1.

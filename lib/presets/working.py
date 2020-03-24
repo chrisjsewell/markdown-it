@@ -6,7 +6,7 @@ modes. For example, to parse bold/italic only.
 presets = {
     "options": {
         "html": True,  # Enable HTML tags in source
-        "xhtmlOut": False,  # Use '/' to close single tags (<br />)
+        "xhtmlOut": True,  # Use '/' to close single tags (<br />)
         "breaks": False,  # Convert '\n' in paragraphs into <br>
         "langPrefix": "language-",  # CSS language prefix for fenced blocks
         "linkify": False,  # autoconvert URL-like texts to links
@@ -45,7 +45,9 @@ presets = {
                 "autolink",
                 "backticks",
                 "emphasis",
+                "entity",
                 "escape",
+                "html_inline",
                 "image",
                 "link",
                 "newline",
