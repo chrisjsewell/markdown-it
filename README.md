@@ -1,18 +1,5 @@
 # markdown-it
 
-## Porting Notes
-
-Ported from:
-markdown-it/markdown-it@f798bea9623277bbf89b9621cf7fb283c693fcab
-(Mar 12, 2020)
-
-- Rename variables that use python built-in names:
-  - `max` -> `maximum`
-  - `len` -> `length`
-- Convert JS for loops -> while loops
-- Use python version of `charCodeAt`
-- allow custom renderer to be passed to `MarkdownIt`
-
 [![Build Status](https://img.shields.io/travis/markdown-it/markdown-it/master.svg?style=flat)](https://travis-ci.org/markdown-it/markdown-it)
 [![NPM version](https://img.shields.io/npm/v/markdown-it.svg?style=flat)](https://www.npmjs.org/package/markdown-it)
 [![Coverage Status](https://coveralls.io/repos/markdown-it/markdown-it/badge.svg?branch=master&service=github)](https://coveralls.io/github/markdown-it/markdown-it?branch=master)
@@ -31,7 +18,6 @@ __[Live demo](https://markdown-it.github.io)__
 __Table of content__
 
 - [markdown-it](#markdown-it)
-  - [Porting Notes](#porting-notes)
   - [Install](#install)
   - [Usage examples](#usage-examples)
     - [Simple](#simple)

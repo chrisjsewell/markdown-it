@@ -1,4 +1,5 @@
 {
+  "editor.rulers": [88],
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
@@ -12,5 +13,5 @@
   "python.linting.pylintEnabled": false,
   "python.linting.flake8Enabled": true,
   "python.linting.enabled": true,
-  "autoDocstring.docstringFormat": "sphinx"
+  "autoDocstring.customTemplatePath": "docstring.fmt.mustache"
 }

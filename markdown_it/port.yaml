@@ -1,0 +1,10 @@
+- package: markdown-it/markdown-it
+  commit: f798bea9623277bbf89b9621cf7fb283c693fcab
+  date: Mar 12, 2020
+  notes:
+    - Rename variables that use python built-in names:
+      - `max` -> `maximum`
+      - `len` -> `length`
+    - Convert JS for loops -> while loops
+    - Use python version of `charCodeAt`
+    - allow custom renderer to be passed to `MarkdownIt`

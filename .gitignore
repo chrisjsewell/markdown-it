@@ -6,3 +6,4 @@ apidoc/
 *.log
 __pycache__/
 .ropeproject/
+*.egg-info/
