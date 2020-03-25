@@ -8,8 +8,8 @@ import pytest
 
 from markdown_it import MarkdownIt
 
-SPEC_INPUT = Path(__file__).parent.joinpath("commonmark_spec", "spec.md")
-TESTS_INPUT = Path(__file__).parent.joinpath("commonmark_spec", "commonmark.json")
+SPEC_INPUT = Path(__file__).parent.joinpath("spec.md")
+TESTS_INPUT = Path(__file__).parent.joinpath("commonmark.json")
 
 
 def test_file(file_regression):
