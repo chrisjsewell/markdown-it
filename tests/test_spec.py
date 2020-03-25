@@ -23,14 +23,10 @@ def test_spec(entry):
     if entry["example"] in [315, 318, 612]:
         # these tests are compliant with markdown-it demo, but not here
         pytest.skip("code span spacing")
-    if entry["example"] in [
-        273,
-    ]:
+    if entry["example"] in [273]:
         # markdown it markdown-it only support 4 levels of list items
         pytest.skip("list level > 4")
-    if entry["example"] in [
-        274,
-    ]:
+    if entry["example"] in [274]:
         # these tests are compliant with markdown-it demo, but not here
         pytest.skip("max indentation for list reached")
     md = MarkdownIt("commonmark")

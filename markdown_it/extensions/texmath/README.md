@@ -35,7 +35,7 @@ This extension is a comfortable tool for scientists, engineers and students with
     * display: `$$...$$`
     * display + equation number: `$$...$$ (1)`
 
-## Show me 
+## Show me
 
 View a [test table](https://goessner.github.io/markdown-it-texmath/index.html).
 

@@ -7,13 +7,15 @@ import yaml
 
 from docutils import nodes
 from docutils.frontend import OptionParser
-from docutils.languages import get_language
-from docutils.parsers.rst import directives, Directive, DirectiveError, roles
+
+# from docutils.languages import get_language
+# from docutils.parsers.rst import directives, Directive, DirectiveError, roles
 from docutils.parsers.rst import Parser as RSTParser
-from docutils.parsers.rst.directives.misc import Include
-from docutils.parsers.rst.states import RSTStateMachine, Body, Inliner
-from docutils.statemachine import StringList
-from docutils.utils import new_document, Reporter
+
+# from docutils.parsers.rst.directives.misc import Include
+# from docutils.parsers.rst.states import RSTStateMachine, Body, Inliner
+# from docutils.statemachine import StringList
+from docutils.utils import new_document, Reporter  # noqa
 
 from markdown_it.token import Token
 

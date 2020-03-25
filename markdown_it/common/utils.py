@@ -207,10 +207,7 @@ def escapeRE(string: str) -> str:
 
 
 def isSpace(code):
-    return code in {
-        0x09,
-        0x20,
-    }
+    return code in {0x09, 0x20}
 
 
 MD_WHITESPACE = {

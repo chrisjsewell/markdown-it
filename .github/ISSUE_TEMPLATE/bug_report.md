@@ -18,7 +18,7 @@ not about markdown itself. We stay aside of markup discussions. Prior to report 
 2. https://spec.commonmark.org/dingus/ - if you think you found parse error, check it in reference implementation first.
 3. https://markdown-it.github.io/ to test what is the expected output from markdown-ot
 
-**In your report** 
+**In your report**
 
 It will be very helpful, if you can provide permalinks with online samples and explain the difference:
 

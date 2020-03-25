@@ -283,7 +283,7 @@ rules = AttrDict(
                 {
                     "name": "math_block_eqno",
                     "rex": re.compile(r"\${2}([^$]*?)\${2}\s*?\(([^)$\r\n]+?)\)", re.M),
-                    "tmpl": '<section class="eqno">\n<eqn>{0}</eqn><span>({1})</span>\n</section>\n',
+                    "tmpl": '<section class="eqno">\n<eqn>{0}</eqn><span>({1})</span>\n</section>\n',  # noqa: E501
                     "tag": "$$",
                 },
                 {
