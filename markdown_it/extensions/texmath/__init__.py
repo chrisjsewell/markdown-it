@@ -1,1 +1,1 @@
-from .main import texmath  # noqa F401
+from .index import texmath_plugin  # noqa F401

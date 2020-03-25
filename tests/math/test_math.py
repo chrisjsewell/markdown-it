@@ -7,7 +7,8 @@ import pytest
 from markdown_it import MarkdownIt
 from markdown_it.rules_inline import StateInline
 from markdown_it.rules_block import StateBlock
-from markdown_it.extensions.texmath import main
+from markdown_it.extensions.texmath import index as main
+from markdown_it.extensions.texmath import texmath_plugin
 
 
 def test_inline_func():
@@ -62,7 +63,7 @@ def test_block_func():
 
 
 def test_plugin_parse(data_regression):
-    md = MarkdownIt().use(main.texmath)
+    md = MarkdownIt().use(texmath_plugin)
     tokens = md.parse(
         dedent(
             """\
@@ -79,7 +80,7 @@ def test_plugin_parse(data_regression):
 
 
 def test_plugin_render():
-    md = MarkdownIt().use(main.texmath)
+    md = MarkdownIt().use(texmath_plugin)
     text = md.render(
         dedent(
             """\
@@ -119,7 +120,7 @@ def test_plugin_render():
     ],
 )
 def test_fixtures(index, comment, src, valid, data_regression):
-    md = MarkdownIt().use(main.texmath)
+    md = MarkdownIt().use(texmath_plugin)
     tokens = md.parse(src)
     if tokens[0].type == "paragraph_open":
         tokens = tokens[1:-1]
@@ -128,8 +129,8 @@ def test_fixtures(index, comment, src, valid, data_regression):
     )
 
 
-def test_a():
-    md = MarkdownIt().use(main.texmath)
-    tokens = md.parse("$1+1=\\n2$")
-    print(tokens)
-    raise
+# def test_a():
+#     md = MarkdownIt().use(texmath_plugin)
+#     tokens = md.parse("$1+1=\\n2$")
+#     print(tokens)
+#     raise

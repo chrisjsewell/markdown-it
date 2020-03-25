@@ -45,7 +45,9 @@ class ParserBlock:
             rule = data[1]
             self.ruler.push(name, rule, {"alt": data[2] if len(data) > 2 else []})
 
-    def tokenize(self, state: StateBlock, startLine: int, endLine: int):
+    def tokenize(
+        self, state: StateBlock, startLine: int, endLine: int, silent: bool = False
+    ):
         """Generate tokens for input range."""
         rules = self.ruler.getRules("")
         line = startLine
@@ -72,7 +74,7 @@ class ParserBlock:
             # - update `state.tokens`
             # - return True
             for rule in rules:
-                if rule(state, line, endLine, False):
+                if rule(state, line, endLine, silent):
                     break
 
             # set state.tight if we had an empty line before current tag

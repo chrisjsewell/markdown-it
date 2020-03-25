@@ -197,6 +197,7 @@ class MarkdownIt:
         inject data in specific cases. Usually, you will be ok to pass `{}`,
         and then pass updated object to renderer.
         """
+        env = env or {}
         if not isinstance(src, str):
             raise TypeError("Input data should be a string")
         state = StateCore(src, self, env)

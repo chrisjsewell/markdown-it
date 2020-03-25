@@ -8,3 +8,9 @@
     - Convert JS for loops -> while loops
     - Use python version of `charCodeAt`
     - allow custom renderer to be passed to `MarkdownIt`
+    - |
+      render method signatures:
+
+      `func(tokens, idx, options, env, slf)` to
+      `func(self, tokens, idx, options, env)`
+

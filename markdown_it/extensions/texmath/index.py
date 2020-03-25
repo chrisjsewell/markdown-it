@@ -5,7 +5,7 @@ from markdown_it import MarkdownIt
 from markdown_it.utils import AttrDict
 
 
-def texmath(md: MarkdownIt, **options):
+def texmath_plugin(md: MarkdownIt, **options):
     delimiters = options.get("delimiters", None) or "dollars"
     macros = options.get("macros", {})
 
