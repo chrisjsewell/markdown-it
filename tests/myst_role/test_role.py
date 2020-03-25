@@ -1,6 +1,6 @@
 from markdown_it import MarkdownIt
 from markdown_it.token import Token
-from markdown_it.extensions.sphinx_role import role_plugin
+from markdown_it.extensions.myst_role import role_plugin
 
 
 def test_basic():

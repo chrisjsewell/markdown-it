@@ -4,14 +4,14 @@ import pytest
 
 from markdown_it import MarkdownIt
 from markdown_it.utils import read_fixture_file
-from markdown_it.extensions.sphinx_role import role_plugin
+from markdown_it.extensions.myst_blocks import myst_block_plugin
 
 FIXTURE_PATH = Path(__file__).parent.joinpath("fixtures.md")
 
 
 @pytest.mark.parametrize("line,title,input,expected", read_fixture_file(FIXTURE_PATH))
 def test_all(line, title, input, expected):
-    md = MarkdownIt("commonmark").use(role_plugin)
+    md = MarkdownIt("commonmark").use(myst_block_plugin)
     md.options["xhtmlOut"] = False
     text = md.render(input)
     print(text)
