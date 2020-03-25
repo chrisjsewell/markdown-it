@@ -155,6 +155,7 @@ def test_footnote_inline():
     ]
     assert state.env == {
         "footnotes": {
+            "refs": {":a": -1},
             "list": {
                 0: {
                     "content": "a",
@@ -176,7 +177,7 @@ def test_footnote_inline():
                         )
                     ],
                 }
-            }
+            },
         }
     }
 
@@ -419,7 +420,7 @@ def test_plugin_render():
     text = md.render(
         dedent(
             """\
-    [^1] ^[a]
+    [^1] ^[a] [^a] [^a]
 
     [^1]: abc
     [^a]: xyz
@@ -429,33 +430,36 @@ def test_plugin_render():
     assert text == (
         dedent(
             """\
-    <p>[^1] <sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup></p>
+    <p><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> <sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> <sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> <sup class="footnote-ref"><a href="#fn3" id="fnref3:1">[3:1]</a></sup></p>
     <hr class="footnotes-sep" />
     <section class="footnotes">
     <ol class="footnotes-list">
-    <li id="fn1" class="footnote-item"><p>a <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+    <li id="fn1" class="footnote-item"><p>abc <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+    </li>
+    <li id="fn2" class="footnote-item"><p>a <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+    </li>
+    <li id="fn3" class="footnote-item"><p>xyz <a href="#fnref3" class="footnote-backref">↩︎</a> <a href="#fnref3:1" class="footnote-backref">↩︎</a></p>
     </li>
     </ol>
     </section>
-    """
+    """  # noqa: E501
         )
     )
 
 
-def test_plugin_other():
-    md = MarkdownIt().use(footnote_plugin)
-    env = {}
-    tokens = md.parse(
-        dedent(
-            """\
-    [^xxxxx] [^xxxxx]
+# def test_plugin_other():
+#     md = MarkdownIt().use(footnote_plugin)
+#     env = {}
+#     tokens = md.parse(
+#         dedent(
+#             """\
+#     [^xxxxx] [^xxxxx]
 
-    [^xxxxx]: foo
-    """
-        ),
-        env=env,
-    )
-    for t in tokens:
-        if "footnote" in t.type:
-            print(t)
-    raise
+#     [^xxxxx]: foo
+#     """
+#         ),
+#         env=env,
+#     )
+#     for t in tokens:
+#         if "footnote" in t.type:
+#             print(t)
