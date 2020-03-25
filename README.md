@@ -1,9 +1,59 @@
-# markdown-it
+# markdown-it-py
 
-[![Build Status](https://img.shields.io/travis/markdown-it/markdown-it/master.svg?style=flat)](https://travis-ci.org/markdown-it/markdown-it)
-[![NPM version](https://img.shields.io/npm/v/markdown-it.svg?style=flat)](https://www.npmjs.org/package/markdown-it)
-[![Coverage Status](https://coveralls.io/repos/markdown-it/markdown-it/badge.svg?branch=master&service=github)](https://coveralls.io/github/markdown-it/markdown-it?branch=master)
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/markdown-it/markdown-it)
+This is a Python port of [markdown-it](https://github.com/markdown-it/markdown-it),
+and some of its associated plugins.
+It is still under development, so should be used with caution.
+
+Details of the port can be found in `markdown_it/port.yaml` and in `port.yaml`
+with the extension folders. Basic usage:
+
+
+```python
+from markdown_it import MarkdownIt
+from markdown_it.extensions.front_matter import front_matter_plugin
+from markdown_it.extensions.footnote import footnote_plugin
+
+md = MarkdownIt().use(front_matter_plugin).use(footnote_plugin)
+tokens = md.parse("some text")
+text = md.render("some text")
+```
+
+Also you can use it from the command-line:
+
+```console
+$ markdown-it
+markdown-it-py [version 0.1.0] (interactive)
+Type Ctrl-D to complete input, or Ctrl-C to exit.
+>>> > **hallo** there!
+... 
+<blockquote>
+<p><strong>hallo</strong> there!</p>
+</blockquote>
+```
+
+## Benchmarking
+
+```console
+$ markdown-it-bench -n 30
+Test document: spec.md
+Test iterations: 30
+Running 7 test(s) ...
+=====================
+mistune          (0.8.4): 3.62 s
+markdown-it-py   (0.1.0): 9.03 s
+mistletoe        (0.10.0): 9.89 s
+commonmark-py    (0.9.1): 20.82 s
+pymarkdown       (3.2.1): 34.50 s
+pymarkdown:extra (3.2.1): 41.86 s
+panflute         (1.12.5): 35.02 s
+```
+
+Note `mistune` is not CommonMark compliant, which is what allows for its
+faster parsing, at the expense of issues, for example, with nested inline parsing.
+See [mistletoes's explanation](https://github.com/miyuchina/mistletoe#performance)
+for further details.
+
+## Original README
 
 > Markdown parser done right. Fast and easy to extend.
 
@@ -17,7 +67,9 @@ __[Live demo](https://markdown-it.github.io)__
 
 __Table of content__
 
-- [markdown-it](#markdown-it)
+- [markdown-it-py](#markdown-it-py)
+  - [Benchmarking](#benchmarking)
+  - [Original README](#original-readme)
   - [Install](#install)
   - [Usage examples](#usage-examples)
     - [Simple](#simple)
