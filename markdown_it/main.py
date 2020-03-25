@@ -26,7 +26,10 @@ config = AttrDict(
 
 class MarkdownIt:
     def __init__(
-        self, presetName: Union[str, AttrDict] = "commonmark", options=None, renderer=None
+        self,
+        presetName: Union[str, AttrDict] = "commonmark",
+        options=None,
+        renderer=None,
     ):
         """Main class
 

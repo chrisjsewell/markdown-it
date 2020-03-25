@@ -453,7 +453,7 @@ def test_plugin_other():
     [^xxxxx]: foo
     """
         ),
-        env=env
+        env=env,
     )
     for t in tokens:
         if "footnote" in t.type:

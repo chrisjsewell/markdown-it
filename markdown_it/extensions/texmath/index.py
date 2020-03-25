@@ -11,15 +11,21 @@ def texmath_plugin(md: MarkdownIt, **options):
 
     if delimiters in rules:
         for rule_inline in rules[delimiters]["inline"]:
-            md.inline.ruler.before("escape", rule_inline["name"], make_inline_func(rule_inline))
+            md.inline.ruler.before(
+                "escape", rule_inline["name"], make_inline_func(rule_inline)
+            )
 
             def render_math_inline(self, tokens, idx, options, env):
-                return rule_inline["tmpl"].format(render(tokens[idx].content, False, macros))
+                return rule_inline["tmpl"].format(
+                    render(tokens[idx].content, False, macros)
+                )
 
             md.renderer.rules[rule_inline["name"]] = render_math_inline
 
         for rule_block in rules[delimiters]["block"]:
-            md.block.ruler.before("fence", rule_block["name"], make_block_func(rule_block))
+            md.block.ruler.before(
+                "fence", rule_block["name"], make_block_func(rule_block)
+            )
 
             def render_math_block(self, tokens, idx, options, env):
                 return rule_block["tmpl"].format(

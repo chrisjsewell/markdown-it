@@ -10,7 +10,7 @@ enclosingPipesRe = re.compile(r"^\||\|$")
 
 
 def getLine(state: StateBlock, line: int):
-    pos = (state.bMarks[line] + state.blkIndent)
+    pos = state.bMarks[line] + state.blkIndent
     maximum = state.eMarks[line]
 
     # return state.src.substr(pos, max - pos)

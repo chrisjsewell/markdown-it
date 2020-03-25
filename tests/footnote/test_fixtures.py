@@ -36,4 +36,6 @@ def test_all(line, title, input, expected):
     md.options["xhtmlOut"] = False
     text = md.render(input)
     print(text)
-    assert text.rstrip() == expected.rstrip()
+    assert text.rstrip().replace("↩︎", "<-").replace(
+        "↩", "<-"
+    ) == expected.rstrip().replace("↩︎", "<-").replace("↩", "<-")

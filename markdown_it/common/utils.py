@@ -187,9 +187,11 @@ def unescapeAll(string: str):
 
 #     return string
 
+
 def escapeHtml(raw: str):
     # return html.escape(html.unescape(raw)).replace("&#x27;", "'")
     return html.escape(raw).replace("&#x27;", "'")
+
 
 # //////////////////////////////////////////////////////////////////////////////
 

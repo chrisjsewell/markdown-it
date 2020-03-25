@@ -242,7 +242,7 @@ def footnote_tail(state: StateBlock, *args, **kwargs):
 
     insideRef = False
     refTokens = {}
-    print(state.env)
+
     if "footnotes" not in state.env:
         return
 
@@ -278,13 +278,12 @@ def footnote_tail(state: StateBlock, *args, **kwargs):
     token = Token("footnote_block_open", "", 1)
     state.tokens.append(token)
 
-    i = 0
-    while i < len(foot_list):
+    for i, foot_note in foot_list.items():
         token = Token("footnote_open", "", 1)
-        token.meta = {"id": i, "label": foot_list[i].get("label", None)}
+        token.meta = {"id": i, "label": foot_note.get("label", None)}
         state.tokens.append(token)
 
-        if "tokens" in foot_list[i]:
+        if "tokens" in foot_note:
             tokens = []
 
             token = Token("paragraph_open", "p", 1)
@@ -292,16 +291,16 @@ def footnote_tail(state: StateBlock, *args, **kwargs):
             tokens.append(token)
 
             token = Token("inline", "", 0)
-            token.children = foot_list[i]["tokens"]
-            token.content = foot_list[i]["content"]
+            token.children = foot_note["tokens"]
+            token.content = foot_note["content"]
             tokens.append(token)
 
             token = Token("paragraph_close", "p", -1)
             token.block = True
             tokens.append(token)
 
-        elif "label" in foot_list[i]:
-            tokens = refTokens[":" + foot_list[i]["label"]]
+        elif "label" in foot_note:
+            tokens = refTokens[":" + foot_note["label"]]
 
         state.tokens.extend(tokens)
         if state.tokens[len(state.tokens) - 1].type == "paragraph_close":
@@ -309,11 +308,15 @@ def footnote_tail(state: StateBlock, *args, **kwargs):
         else:
             lastParagraph = None
 
-        t = foot_list[i]["count"] if ("count" in foot_list) and (foot_list[i]["count"] > 0) else 1
+        t = (
+            foot_note["count"]
+            if (("count" in foot_note) and (foot_note["count"] > 0))
+            else 1
+        )
         j = 0
         while j < t:
             token = Token("footnote_anchor", "", 0)
-            token.meta = {"id": i, "subId": j, "label": foot_list[i].get("label", None)}
+            token.meta = {"id": i, "subId": j, "label": foot_note.get("label", None)}
             state.tokens.append(token)
             j += 1
 
@@ -322,8 +325,6 @@ def footnote_tail(state: StateBlock, *args, **kwargs):
 
         token = Token("footnote_close", "", -1)
         state.tokens.append(token)
-
-        i += 1
 
     token = Token("footnote_block_close", "", -1)
     state.tokens.append(token)
@@ -404,7 +405,7 @@ def render_footnote_anchor(self, tokens, idx, options, env):
     ident = self.rules["footnote_anchor_name"](self, tokens, idx, options, env)
 
     if tokens[idx].meta["subId"] > 0:
-        ident += ":" + tokens[idx].meta["subId"]
+        ident += ":" + str(tokens[idx].meta["subId"])
 
     # ↩ with escape code to prevent display as Apple Emoji on iOS
     return ' <a href="#fnref' + ident + '" class="footnote-backref">\u21a9\uFE0E</a>'

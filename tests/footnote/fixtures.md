@@ -146,7 +146,7 @@ Duplicate footnotes:
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>foo <a href="#fnref1" class="footnote-backref">↩</a> <a href="#fnref1:1" class="footnote-backref">↩︎</a></p>
+<li id="fn1" class="footnote-item"><p>foo <a href="#fnref1" class="footnote-backref">↩︎</a> <a href="#fnref1:1" class="footnote-backref">↩︎</a></p>
 </li>
 </ol>
 </section>
@@ -170,7 +170,7 @@ Indents:
 <section class="footnotes">
 <ol class="footnotes-list">
 <li id="fn1" class="footnote-item"><h2>foo</h2>
- <a href="#fnref1" class="footnote-backref">↩</a></li>
+ <a href="#fnref1" class="footnote-backref">↩︎</a></li>
 <li id="fn2" class="footnote-item"><p>foo <a href="#fnref2" class="footnote-backref">↩︎</a></p>
 </li>
 </ol>

@@ -24,15 +24,14 @@ from urllib.parse import urlparse, urlunparse, quote, unquote  # noqa: F401
 
 #  ################# Copied from Commonmark.py #################
 
-ENTITY = '&(?:#x[a-f0-9]{1,6}|#[0-9]{1,7}|[a-z][a-z0-9]{1,31});'
-ESCAPABLE = '[!"#$%&\'()*+,./:;<=>?@[\\\\\\]^_`{|}~-]'
-reBackslashOrAmp = re.compile(r'[\\&]')
-reEntityOrEscapedChar = re.compile(
-    '\\\\' + ESCAPABLE + '|' + ENTITY, re.IGNORECASE)
+ENTITY = "&(?:#x[a-f0-9]{1,6}|#[0-9]{1,7}|[a-z][a-z0-9]{1,31});"
+ESCAPABLE = "[!\"#$%&'()*+,./:;<=>?@[\\\\\\]^_`{|}~-]"
+reBackslashOrAmp = re.compile(r"[\\&]")
+reEntityOrEscapedChar = re.compile("\\\\" + ESCAPABLE + "|" + ENTITY, re.IGNORECASE)
 
 
 def unescape_char(s):
-    if s[0] == '\\':
+    if s[0] == "\\":
         return s[1]
     else:
         return html.unescape(s)
@@ -41,16 +40,14 @@ def unescape_char(s):
 def unescape_string(s):
     """Replace entities and backslash escapes with literal characters."""
     if re.search(reBackslashOrAmp, s):
-        return re.sub(
-            reEntityOrEscapedChar,
-            lambda m: unescape_char(m.group()),
-            s)
+        return re.sub(reEntityOrEscapedChar, lambda m: unescape_char(m.group()), s)
     else:
         return s
 
 
 def normalize_uri(uri):
-    return quote(uri.encode('utf-8'), safe=str('/@:+?=&()%#*,'))
+    return quote(uri.encode("utf-8"), safe=str("/@:+?=&()%#*,"))
+
 
 ##################
 

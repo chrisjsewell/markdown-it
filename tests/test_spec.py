@@ -44,4 +44,3 @@ def test_spec(entry):
         )
 
     assert output == expected
-

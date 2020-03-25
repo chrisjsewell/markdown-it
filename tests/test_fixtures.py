@@ -37,7 +37,9 @@ def test_title(line, title, input, expected):
     assert text.rstrip() == expected.rstrip()
 
 
-@pytest.mark.parametrize("line, title,input,expected", read_fixture("commonmark_extras"))
+@pytest.mark.parametrize(
+    "line, title,input,expected", read_fixture("commonmark_extras")
+)
 def test_commonmark_extras(line, title, input, expected):
     md = MarkdownIt("commonmark")
     text = md.render(input)
