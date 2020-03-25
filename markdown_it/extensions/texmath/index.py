@@ -20,7 +20,7 @@ def texmath_plugin(md: MarkdownIt, **options):
                     render(tokens[idx].content, False, macros)
                 )
 
-            md.renderer.rules[rule_inline["name"]] = render_math_inline
+            md.add_render_rule(rule_inline["name"], render_math_inline)
 
         for rule_block in rules[delimiters]["block"]:
             md.block.ruler.before(
@@ -32,7 +32,7 @@ def texmath_plugin(md: MarkdownIt, **options):
                     render(tokens[idx].content, True, macros), tokens[idx].info
                 )
 
-            md.renderer.rules[rule_block["name"]] = render_math_block
+            md.add_render_rule(rule_block["name"], render_math_block)
 
 
 def applyRule(rule, string: str, beg, inBlockquote):

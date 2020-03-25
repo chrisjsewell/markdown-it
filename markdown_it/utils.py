@@ -19,7 +19,7 @@ def read_fixture_file(path):
     last_pos = 0
     lines = text.splitlines(keepends=True)
     for i in range(len(lines)):
-        if lines[i].startswith("."):
+        if lines[i].rstrip() == ".":
             if section == 0:
                 tests.append([i, lines[i - 1].strip()])
                 section = 1

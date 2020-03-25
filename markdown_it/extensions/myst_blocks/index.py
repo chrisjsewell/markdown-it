@@ -21,7 +21,7 @@ def myst_block_plugin(md: MarkdownIt):
         target,
         {"alt": ["paragraph", "reference", "blockquote", "list", "footnote_def"]},
     )
-    md.renderer.rules["myst_target"] = render_myst_target
+    md.add_render_rule("myst_target", render_myst_target)
 
 
 def block_break(state: StateBlock, startLine: int, endLine: int, silent: bool):
@@ -59,9 +59,9 @@ def block_break(state: StateBlock, startLine: int, endLine: int, silent: bool):
 
     state.line = startLine + 1
 
-    token = state.push("myst-block", "hr", 0)
+    token = state.push("myst_block_break", "hr", 0)
     token.attrSet("class", "myst-block")
-    token.content = state.src[pos:maximum].strip()
+    token.content = state.src[pos - 1 : maximum].strip()
     token.map = [startLine, state.line]
     token.markup = chr(marker) * (cnt + 1)
 

@@ -44,6 +44,8 @@ class RendererHTML:
     for more details and examples.
     """
 
+    __output__ = "html"
+
     def __init__(self):
         self.rules = {
             k: v

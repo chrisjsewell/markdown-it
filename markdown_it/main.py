@@ -167,6 +167,10 @@ class MarkdownIt:
             raise ValueError(f"MarkdownIt. Failed to disable unknown rule(s): {missed}")
         return self
 
+    def add_render_rule(self, name, function, fmt="html"):
+        if self.renderer.__output__ == fmt:
+            self.renderer.rules[name] = function
+
     def use(self, plugin: Callable, *params):
         """ chainable
 

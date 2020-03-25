@@ -1,10 +1,10 @@
 from markdown_it import MarkdownIt
 from markdown_it.token import Token
-from markdown_it.extensions.myst_role import role_plugin
+from markdown_it.extensions.myst_role import myst_role_plugin
 
 
 def test_basic():
-    md = MarkdownIt().use(role_plugin)
+    md = MarkdownIt().use(myst_role_plugin)
     src = "{abc}``` a ```"
     tokens = md.parse(src)
     print(tokens)
@@ -33,7 +33,7 @@ def test_basic():
             level=1,
             children=[
                 Token(
-                    type="sphinx_role",
+                    type="myst_role",
                     tag="",
                     nesting=0,
                     attrs=None,

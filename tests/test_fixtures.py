@@ -19,7 +19,8 @@ def test_title(line, title, input, expected):
 
 
 @pytest.mark.parametrize(
-    "line,title,input,expected", read_fixture_file(FIXTURE_PATH.joinpath("commonmark_extras.md"))
+    "line,title,input,expected",
+    read_fixture_file(FIXTURE_PATH.joinpath("commonmark_extras.md")),
 )
 def test_commonmark_extras(line, title, input, expected):
     md = MarkdownIt("commonmark")

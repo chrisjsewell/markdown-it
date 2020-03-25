@@ -18,16 +18,16 @@ def footnote_plugin(md: MarkdownIt):
     md.inline.ruler.after("footnote_inline", "footnote_ref", footnote_ref)
     md.core.ruler.after("inline", "footnote_tail", footnote_tail)
 
-    md.renderer.rules["footnote_ref"] = render_footnote_ref
-    md.renderer.rules["footnote_block_open"] = render_footnote_block_open
-    md.renderer.rules["footnote_block_close"] = render_footnote_block_close
-    md.renderer.rules["footnote_open"] = render_footnote_open
-    md.renderer.rules["footnote_close"] = render_footnote_close
-    md.renderer.rules["footnote_anchor"] = render_footnote_anchor
+    md.add_render_rule("footnote_ref", render_footnote_ref)
+    md.add_render_rule("footnote_block_open", render_footnote_block_open)
+    md.add_render_rule("footnote_block_close", render_footnote_block_close)
+    md.add_render_rule("footnote_open", render_footnote_open)
+    md.add_render_rule("footnote_close", render_footnote_close)
+    md.add_render_rule("footnote_anchor", render_footnote_anchor)
 
     # helpers (only used in other rules, no tokens are attached to those)
-    md.renderer.rules["footnote_caption"] = render_footnote_caption
-    md.renderer.rules["footnote_anchor_name"] = render_footnote_anchor_name
+    md.add_render_rule("footnote_caption", render_footnote_caption)
+    md.add_render_rule("footnote_anchor_name", render_footnote_anchor_name)
 
 
 # ## RULES ##

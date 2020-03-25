@@ -1,7 +1,9 @@
 from contextlib import contextmanager
+import json
 from typing import List, Optional, Union
 
 import attr
+import yaml
 
 from docutils import nodes
 from docutils.frontend import OptionParser
@@ -25,13 +27,9 @@ class NestedTokens:
     def __getattr__(self, name):
         return getattr(self.opening, name)
 
-    # @property
-    # def map(self):
-    #     return self.opening.map
-
-    # @property
-    # def map(self):
-    #     return self.opening.map
+    def attrGet(self, name: str) -> str:
+        """ Get the value of attribute `name`, or null if it does not exist."""
+        return self.opening.attrGet(name)
 
 
 def get_nested(tokens: List[Token]) -> List[Union[Token, NestedTokens]]:
@@ -74,6 +72,8 @@ def make_document(source_path="notset") -> nodes.document:
 
 
 class DocRenderer:
+    __output__ = "docutils"
+
     def __init__(self, options=None, env=None):
         self.options = options or {}
         self.env = env or {}
@@ -93,7 +93,7 @@ class DocRenderer:
             if f"render_{token.type}" in self.rules:
                 self.rules[f"render_{token.type}"](self, token)
             else:
-                print(f"no render method: {token.type}")
+                print(f"no render method for: {token.type}")
 
     @contextmanager
     def current_node_context(self, node, append: bool = False):
@@ -140,7 +140,25 @@ class DocRenderer:
             if section_level <= level
         )
 
-    # ### render methods
+    def renderInlineAsText(self, tokens: List[Token]) -> str:
+        """Special kludge for image `alt` attributes to conform CommonMark spec.
+
+        Don't try to use it! Spec requires to show `alt` content with stripped markup,
+        instead of simple escaping.
+        """
+        result = ""
+
+        for token in tokens or []:
+            if token.type == "text":
+                result += token.content
+            # elif token.type == "image":
+            #     result += self.renderInlineAsText(token.children)
+            else:
+                result += self.renderInlineAsText(token.children)
+
+        return result
+
+    # ### render methods for tokens
 
     def render_paragraph_open(self, token):
         para = nodes.paragraph("")
@@ -243,3 +261,94 @@ class DocRenderer:
         section["names"].append(name)
         self.document.note_implicit_target(section, section)
         self.current_node = section
+
+    def render_link_open(self, token):
+        # TODO I think this may be already handled?
+        # refuri = escape_url(token.target)
+        refuri = target = token.attrGet("href")
+        ref_node = nodes.reference(target, target, refuri=refuri)
+        self.add_line_and_source_path(ref_node, token)
+        self.current_node.append(ref_node)
+
+    def render_html_inline(self, token):
+        self.current_node.append(nodes.raw("", token.content, format="html"))
+
+    def render_html_block(self, token):
+        self.current_node.append(nodes.raw("", token.content, format="html"))
+
+    def render_image(self, token):
+        img_node = nodes.image()
+        self.add_line_and_source_path(img_node, token)
+        img_node["uri"] = token.attrGet("src")
+        # TODO ideally we would render proper markup here
+        img_node["alt"] = self.renderInlineAsText(token.children)
+
+        self.current_node.append(img_node)
+
+    def render_front_matter(self, token):
+        """Pass document front matter data
+
+        For RST, all field lists are captured by
+        ``docutils.docutils.parsers.rst.states.Body.field_marker``,
+        then, if one occurs at the document, it is transformed by
+        `docutils.docutils.transforms.frontmatter.DocInfo`, and finally
+        this is intercepted by sphinx and added to the env in
+        `sphinx.environment.collectors.metadata.MetadataCollector.process_doc`
+
+        So technically the values should be parsed to AST, but this is redundant,
+        since `process_doc` just converts them back to text.
+
+        """
+        try:
+            data = yaml.safe_load(token.content)
+        except (yaml.parser.ParserError, yaml.scanner.ScannerError) as error:
+            msg_node = self.reporter.error(
+                "Front matter block:\n" + str(error), line=token.map[0]
+            )
+            msg_node += nodes.literal_block(token.content, token.content)
+            self.current_node += [msg_node]
+            return
+
+        docinfo = dict_to_docinfo(data)
+        self.current_node.append(docinfo)
+
+    def render_myst_block_break(self, token):
+        block_break = nodes.comment(token.content, token.content)
+        block_break["classes"] += ["block_break"]
+        self.add_line_and_source_path(block_break, token)
+        self.current_node.append(block_break)
+
+    def render_myst_target(self, token):
+        text = token.content
+        name = nodes.fully_normalize_name(text)
+        target = nodes.target(text)
+        target["names"].append(name)
+        self.add_line_and_source_path(target, token)
+        self.document.note_explicit_target(target, self.current_node)
+        self.current_node.append(target)
+
+    def render_myst_role(self, token):
+
+        name = token.meta["name"]
+        # TODO representing as literal for place-holder
+        content = f":{name}:`{token.content}`"
+        node = nodes.literal(content, content)
+        self.add_line_and_source_path(node, token)
+        self.current_node.append(node)
+
+
+def dict_to_docinfo(data):
+    """Render a key/val pair as a docutils field node."""
+    # TODO this data could be used to support default option values for directives
+    docinfo = nodes.docinfo()
+
+    for key, value in data.items():
+        if not isinstance(value, (str, int, float)):
+            value = json.dumps(value)
+        value = str(value)
+        field_node = nodes.field()
+        field_node.source = value
+        field_node += nodes.field_name(key, "", nodes.Text(key, key))
+        field_node += nodes.field_body(value, nodes.Text(value, value))
+        docinfo += field_node
+    return docinfo
