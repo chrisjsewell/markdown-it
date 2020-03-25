@@ -23,9 +23,8 @@ class StateBlock(StateBase):
 
         self.bMarks = []  # line begin offsets for fast jumps
         self.eMarks = []  # line end offsets for fast jumps
-        self.tShift = (
-            []
-        )  # offsets of the first non-space characters (tabs not expanded)
+        # offsets of the first non-space characters (tabs not expanded)
+        self.tShift = []
         self.sCount = []  # indents for each line (tabs expanded)
 
         # An amount of virtual spaces (tabs expanded) between beginning
