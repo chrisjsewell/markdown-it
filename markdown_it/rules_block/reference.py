@@ -186,7 +186,7 @@ def reference(state: StateBlock, startLine, _endLine, silent):
     if "references" not in state.env:
         state.env["references"] = {}
 
-    if label not in state.env.references:
+    if label not in state.env["references"]:
         state.env["references"][label] = AttrDict({"title": title, "href": href})
 
     state.parentType = oldParentType

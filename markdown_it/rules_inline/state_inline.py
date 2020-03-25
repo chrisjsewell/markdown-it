@@ -138,8 +138,8 @@ class StateInline(StateBase):
         isLastPunctChar = isMdAsciiPunct(lastChar) or isPunctChar(chr(lastChar))
         isNextPunctChar = isMdAsciiPunct(nextChar) or isPunctChar(chr(nextChar))
 
-        isLastWhiteSpace = isWhiteSpace(chr(lastChar))
-        isNextWhiteSpace = isWhiteSpace(chr(nextChar))
+        isLastWhiteSpace = isWhiteSpace(lastChar)
+        isNextWhiteSpace = isWhiteSpace(nextChar)
 
         if isNextWhiteSpace:
             left_flanking = False
